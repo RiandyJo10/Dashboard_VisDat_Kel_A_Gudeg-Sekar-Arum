@@ -199,27 +199,44 @@ div[data-testid="stExpander"] details * {
     -webkit-text-fill-color: #3D241C !important;
 }
 
-/* Mode ekstra compact: satu grafik dipilih setiap kali, dengan tinggi maksimum 245 px. */
-.block-container {max-width: 1450px; padding-top: .65rem !important; padding-bottom: .4rem !important;}
-.header {padding: 12px 20px !important; border-radius: 13px; margin-bottom: 7px !important;}
-.header h1 {font-size: 1.35rem !important;}
-.header p {font-size: .83rem !important; margin-top: 3px !important;}
-.kpi {min-height: 80px !important; padding: 9px 12px !important; border-radius: 11px;}
-.kpi-label {font-size: .72rem !important;}
-.kpi-value {font-size: 1.2rem !important; margin-top: 3px !important;}
-.kpi-note {font-size: .67rem !important; margin-top: 2px !important;}
-.insight {padding: 6px 12px !important; margin: 4px 0 7px !important; font-size: .8rem !important; line-height: 1.4 !important;}
-.filter-label {font-size: .78rem !important; margin-bottom: .15rem !important;}
+/* Layout 2x2 rapi: ruang antar-komponen dijaga agar tidak bertabrakan. */
+.block-container {
+    max-width: 1450px;
+    padding-top: 1.5rem !important;
+    padding-bottom: 2rem !important;
+}
+.header {
+    padding: 20px 24px !important;
+    margin-bottom: 18px !important;
+    border-radius: 14px !important;
+}
+.header h1 {font-size: 1.65rem !important; line-height: 1.35 !important;}
+.header p {font-size: .89rem !important; margin-top: 8px !important;}
+.kpi {min-height: 110px !important; padding: 14px !important;}
+.kpi-label {font-size: .78rem !important; line-height: 1.35 !important;}
+.kpi-value {font-size: 1.3rem !important; margin-top: 9px !important;}
+.kpi-note {font-size: .73rem !important; margin-top: 6px !important;}
+.insight {
+    padding: 10px 12px !important;
+    margin: 8px 0 12px !important;
+    font-size: .84rem !important;
+    line-height: 1.55 !important;
+    overflow-wrap: anywhere;
+}
+.filter-label {font-size: .86rem !important; margin-bottom: .35rem !important;}
 .st-key-filter_outlet [data-testid="stPopover"] > button,
-.st-key-filter_kanal [data-testid="stPopover"] > button {min-height: 35px !important; height: 35px !important;}
-.st-key-filter_tanggal [data-baseweb="input"] {min-height: 35px !important;}
-div[data-testid="stPlotlyChart"] {padding: 2px !important;}
-.stApp h3 {font-size: 1.05rem !important; margin-bottom: 0 !important;}
-/* Kurangi jarak vertikal bawaan Streamlit. */
-[data-testid="stVerticalBlock"] {gap: .30rem !important;}
-[data-testid="stHorizontalBlock"] {gap: .65rem !important;}
-[data-testid="stRadio"] > div {gap: .4rem !important;}
-[data-testid="stRadio"] label {font-size: .78rem !important;}
+.st-key-filter_kanal [data-testid="stPopover"] > button {min-height: 42px !important;}
+.st-key-filter_tanggal [data-baseweb="input"] {min-height: 42px !important;}
+div[data-testid="stPlotlyChart"] {
+    padding: 10px 8px !important;
+    border-radius: 12px !important;
+    overflow: hidden;
+}
+/* Jangan menekan gap semua blok sampai judul, insight, dan grafik bertumpuk. */
+[data-testid="stVerticalBlock"] {gap: .85rem !important;}
+[data-testid="stHorizontalBlock"] {gap: 1.1rem !important;}
+.stApp h3 {font-size: 1.04rem !important; line-height: 1.35 !important; margin-bottom: .25rem !important;}
+[data-testid="stCaptionContainer"] {line-height: 1.45 !important;}
 
 </style>
 """, unsafe_allow_html=True)
@@ -287,11 +304,11 @@ def insight(teks):
 def gaya(fig, tinggi=440):
     fig.update_layout(
         template="plotly_white",
-        height=min(tinggi, 235),
+        height=min(tinggi, 330),
         paper_bgcolor=PUTIH,
         plot_bgcolor=PUTIH,
-        font=dict(family="Arial", size=10, color=GELAP),
-        margin=dict(l=55, r=40, t=20, b=43),
+        font=dict(family="Arial", size=11, color=GELAP),
+        margin=dict(l=70, r=48, t=40, b=65),
         hoverlabel=dict(bgcolor="white", font_size=11)
     )
     return fig
@@ -562,8 +579,7 @@ bulanan = bulanan[
 tab1, tab2 = st.tabs(["📊 Ringkasan Bisnis", "🔍 Analisis Mendalam"])
 
 with tab1:
-    kiri_atas, kanan_atas = st.columns(2, gap="small")
-    kiri_bawah, kanan_bawah = st.columns(2, gap="small")
+    kiri_atas, kanan_atas = st.columns(2, gap="medium")
     with kiri_atas:
         st.subheader("Perbandingan Omzet Bersih Outlet")
 
@@ -699,6 +715,7 @@ with tab1:
 
 
 
+    kiri_bawah, kanan_bawah = st.columns(2, gap="medium")
     with kiri_bawah:
         st.subheader("Proporsi Omzet Produk Sebelum Diskon")
 
@@ -861,8 +878,7 @@ with tab1:
 
 
 with tab2:
-    kiri_atas, kanan_atas = st.columns(2, gap="small")
-    kiri_bawah, kanan_bawah = st.columns(2, gap="small")
+    kiri_atas, kanan_atas = st.columns(2, gap="medium")
     with kiri_atas:
         st.subheader("Distribusi Omzet Harian per Outlet")
 
@@ -991,6 +1007,7 @@ with tab2:
 
 
 
+    kiri_bawah, kanan_bawah = st.columns(2, gap="medium")
     with kiri_bawah:
         st.subheader(
             "Omzet Harian dan Rata-rata Bergerak 7 Hari"

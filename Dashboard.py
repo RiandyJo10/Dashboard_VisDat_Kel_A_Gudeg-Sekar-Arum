@@ -301,6 +301,8 @@ div[data-testid="stPlotlyChart"] {
     min-height: 26px !important;
     height: 26px !important;
     padding: 2px 5px !important;
+    /* Turunkan tombol sedikit agar sejajar dengan teks judul grafik. */
+    transform: translateY(10px) !important;
 }
 
 </style>

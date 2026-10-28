@@ -140,6 +140,24 @@ div[data-testid="stPlotlyChart"] {
 .st-key-filter_kanal [data-testid="stPopover"] > button:hover {
     background: linear-gradient(110deg, #684331, #B27B51) !important;
 }
+/* Hanya ikon panah bawaan Streamlit; geser ke ujung kanan. */
+.st-key-filter_outlet [data-testid="stPopover"] > button,
+.st-key-filter_kanal [data-testid="stPopover"] > button {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+}
+.st-key-filter_outlet [data-testid="stPopover"] > button svg,
+.st-key-filter_kanal [data-testid="stPopover"] > button svg {
+    margin-left: auto !important;
+    flex-shrink: 0 !important;
+}
+.st-key-filter_outlet [data-testid="stPopover"] > button [data-testid="stMarkdownContainer"],
+.st-key-filter_kanal [data-testid="stPopover"] > button [data-testid="stMarkdownContainer"] {
+    flex: 1 1 auto !important;
+    text-align: left !important;
+}
 /* Rentang tanggal: pertahankan penampilan yang sudah berhasil. */
 .st-key-filter_tanggal [data-baseweb="input"],
 .st-key-filter_tanggal [data-baseweb="base-input"],
@@ -346,7 +364,7 @@ if st.session_state.get("pilihan_kanal_menu") not in opsi_kanal:
 with f1:
     st.markdown('<div class="filter-label">Outlet</div>', unsafe_allow_html=True)
     with st.container(key="filter_outlet"):
-        with st.popover(f"{st.session_state['pilihan_outlet_menu']}   ▾", use_container_width=True):
+        with st.popover(st.session_state["pilihan_outlet_menu"], use_container_width=True):
             for i, nama in enumerate(opsi_outlet):
                 if st.button(nama, key=f"pilih_outlet_{i}", use_container_width=True):
                     st.session_state["pilihan_outlet_menu"] = nama
@@ -356,7 +374,7 @@ with f1:
 with f2:
     st.markdown('<div class="filter-label">Kanal Penjualan</div>', unsafe_allow_html=True)
     with st.container(key="filter_kanal"):
-        with st.popover(f"{st.session_state['pilihan_kanal_menu']}   ▾", use_container_width=True):
+        with st.popover(st.session_state["pilihan_kanal_menu"], use_container_width=True):
             for i, nama in enumerate(opsi_kanal):
                 if st.button(nama, key=f"pilih_kanal_{i}", use_container_width=True):
                     st.session_state["pilihan_kanal_menu"] = nama

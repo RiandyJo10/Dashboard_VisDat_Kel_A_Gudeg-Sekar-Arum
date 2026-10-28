@@ -149,10 +149,34 @@ div[data-testid="stPlotlyChart"] {
     box-shadow: 0 0 0 2px rgba(169, 103, 63, 0.2) !important;
 }
 
-/* TES WARNA FILTER */
-div[data-testid="stSelectbox"],
-div[data-testid="stDateInput"] {
-    outline: 4px solid blue !important;
+/* WARNA COKELAT UNTUK KETIGA FILTER */
+
+/* Latar belakang kotak filter */
+div[data-testid="stSelectbox"] [data-baseweb="select"] > div,
+div[data-testid="stDateInput"] [data-baseweb="input"] {
+    background: linear-gradient(110deg, #5B392B, #A9673F) !important;
+    border: 1px solid #A9673F !important;
+    border-radius: 10px !important;
+}
+
+/* Hilangkan lapisan abu-abu di dalam kotak */
+div[data-testid="stSelectbox"] [data-baseweb="select"] > div > div,
+div[data-testid="stDateInput"] [data-baseweb="input"] > div {
+    background: transparent !important;
+}
+
+/* Tulisan menjadi putih */
+div[data-testid="stSelectbox"] [data-baseweb="select"] *,
+div[data-testid="stDateInput"] [data-baseweb="input"] * {
+    color: white !important;
+    -webkit-text-fill-color: white !important;
+}
+
+/* Ikon dropdown dan kalender */
+div[data-testid="stSelectbox"] svg,
+div[data-testid="stDateInput"] svg {
+    color: white !important;
+    fill: white !important;
 }
 </style>
 """, unsafe_allow_html=True)

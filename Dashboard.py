@@ -101,82 +101,62 @@ div[data-testid="stPlotlyChart"] {
     border-radius: 14px;
     padding: 8px;
 }
-/* Filter: selectbox dan rentang tanggal */
-[data-testid="stSelectbox"] [data-baseweb="select"] > div,
-[data-testid="stSelectbox"] [data-baseweb="select"],
-[data-testid="stDateInput"] [data-baseweb="input"],
-[data-testid="stDateInput"] [data-baseweb="base-input"],
-[data-testid="stDateInputField"] [data-baseweb="input"],
-[data-testid="stDateInputField"] [data-baseweb="base-input"] {
-    background: linear-gradient(110deg, #5B392B, #A9673F) !important;
+/* Filter cokelat - hanya tiga widget, tidak menyentuh expander */
+.st-key-filter_outlet [data-baseweb="select"],
+.st-key-filter_kanal [data-baseweb="select"],
+.st-key-filter_outlet [data-baseweb="select"] > div,
+.st-key-filter_kanal [data-baseweb="select"] > div,
+.st-key-filter_outlet [role="combobox"],
+.st-key-filter_kanal [role="combobox"],
+.st-key-filter_tanggal [data-baseweb="input"],
+.st-key-filter_tanggal [data-baseweb="base-input"],
+.st-key-filter_tanggal [data-baseweb="input"] > div,
+.st-key-filter_tanggal [data-baseweb="base-input"] > div,
+.st-key-filter_tanggal [data-testid="stDateInputField"],
+.st-key-filter_tanggal input {
     background-color: #5B392B !important;
-    border: 1px solid #A9673F !important;
-    border-radius: 12px !important;
+    background-image: linear-gradient(110deg, #5B392B, #A9673F) !important;
     color: #FFFFFF !important;
-    min-height: 46px;
+    border-color: #A9673F !important;
 }
-/* Lapisan input tidak boleh menutupi gradasi */
-[data-testid="stSelectbox"] [data-baseweb="select"] > div > div,
-[data-testid="stDateInput"] [data-baseweb="input"] > div,
-[data-testid="stDateInput"] [data-baseweb="base-input"] > div,
-[data-testid="stDateInputField"] [data-baseweb="input"] > div {
-    background: transparent !important;
+/* Lapisan di dalam kontrol tidak boleh menutup gradasi */
+.st-key-filter_outlet [data-baseweb="select"] > div > div,
+.st-key-filter_kanal [data-baseweb="select"] > div > div,
+.st-key-filter_tanggal [data-baseweb="input"] > div > div,
+.st-key-filter_tanggal [data-baseweb="base-input"] > div > div {
+    background-color: transparent !important;
 }
-/* Teks, tanggal, placeholder, ikon */
-[data-testid="stSelectbox"] [data-baseweb="select"] *,
-[data-testid="stDateInput"] [data-baseweb="input"] *,
-[data-testid="stDateInput"] [data-baseweb="base-input"] *,
-[data-testid="stDateInputField"] [data-baseweb="input"] * {
-    color: #FFFFFF !important;
-    -webkit-text-fill-color: #FFFFFF !important;
-}
-[data-testid="stSelectbox"] svg,
-[data-testid="stDateInput"] svg,
-[data-testid="stDateInputField"] svg {
-    color: #FFFFFF !important;
-    fill: none !important;
-    stroke: #FFFFFF !important;
-}
-[data-testid="stDateInput"] input,
-[data-testid="stDateInputField"] input {
-    background: transparent !important;
-    color: #FFFFFF !important;
-    -webkit-text-fill-color: #FFFFFF !important;
-}
-[data-testid="stSelectbox"] [data-baseweb="select"] > div:focus-within,
-[data-testid="stDateInput"] [data-baseweb="input"]:focus-within {
-    border-color: #E6C39D !important;
-    box-shadow: 0 0 0 2px rgba(169, 103, 63, 0.2) !important;
-}
-
-/* WARNA COKELAT UNTUK KETIGA FILTER */
-
-/* Latar belakang kotak filter */
-div[data-testid="stSelectbox"] [data-baseweb="select"] > div,
-div[data-testid="stDateInput"] [data-baseweb="input"] {
-    background: linear-gradient(110deg, #5B392B, #A9673F) !important;
-    border: 1px solid #A9673F !important;
+.st-key-filter_outlet [role="combobox"],
+.st-key-filter_kanal [role="combobox"],
+.st-key-filter_tanggal [data-baseweb="input"],
+.st-key-filter_tanggal [data-baseweb="base-input"] {
     border-radius: 10px !important;
+    min-height: 42px;
 }
-
-/* Hilangkan lapisan abu-abu di dalam kotak */
-div[data-testid="stSelectbox"] [data-baseweb="select"] > div > div,
-div[data-testid="stDateInput"] [data-baseweb="input"] > div {
-    background: transparent !important;
-}
-
-/* Tulisan menjadi putih */
-div[data-testid="stSelectbox"] [data-baseweb="select"] *,
-div[data-testid="stDateInput"] [data-baseweb="input"] * {
+/* Batasi warna teks dan ikon hanya di tiga filter */
+.st-key-filter_outlet [data-baseweb="select"] *,
+.st-key-filter_kanal [data-baseweb="select"] *,
+.st-key-filter_tanggal input,
+.st-key-filter_tanggal [data-testid="stDateInputField"] * {
     color: white !important;
     -webkit-text-fill-color: white !important;
 }
-
-/* Ikon dropdown dan kalender */
-div[data-testid="stSelectbox"] svg,
-div[data-testid="stDateInput"] svg {
+.st-key-filter_outlet svg,
+.st-key-filter_kanal svg,
+.st-key-filter_tanggal svg {
     color: white !important;
-    fill: white !important;
+    stroke: white !important;
+}
+/* Petunjuk penggunaan: jaga kontras saat dibuka */
+div[data-testid="stExpander"] details,
+div[data-testid="stExpander"] details summary,
+div[data-testid="stExpander"] details > div {
+    background-color: #FFFCF8 !important;
+    color: #3D241C !important;
+}
+div[data-testid="stExpander"] details * {
+    color: #3D241C !important;
+    -webkit-text-fill-color: #3D241C !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -337,7 +317,8 @@ with f1:
         "Outlet",
         ["Semua Outlet"] + sorted(
             df["Outlet"].unique().tolist()
-        )
+        ),
+        key="filter_outlet"
     )
 
 with f2:
@@ -345,7 +326,8 @@ with f2:
         "Kanal Penjualan",
         ["Semua Kanal"] + sorted(
             df["Kanal_Penjualan"].unique().tolist()
-        )
+        ),
+        key="filter_kanal"
     )
 
 with f3:
@@ -357,7 +339,8 @@ with f3:
         ),
         min_value=df["Tanggal"].min().date(),
         max_value=df["Tanggal"].max().date(),
-        format="DD/MM/YYYY"
+        format="DD/MM/YYYY",
+        key="filter_tanggal"
     )
 
 data = df.copy()

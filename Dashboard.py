@@ -101,33 +101,52 @@ div[data-testid="stPlotlyChart"] {
     border-radius: 14px;
     padding: 8px;
 }
-div[data-testid="stSelectbox"] div[data-baseweb="select"] > div,
-div[data-testid="stDateInput"] div[data-baseweb="input"] {
+/* Filter: selectbox dan rentang tanggal */
+[data-testid="stSelectbox"] [data-baseweb="select"] > div,
+[data-testid="stSelectbox"] [data-baseweb="select"],
+[data-testid="stDateInput"] [data-baseweb="input"],
+[data-testid="stDateInput"] [data-baseweb="base-input"],
+[data-testid="stDateInputField"] [data-baseweb="input"],
+[data-testid="stDateInputField"] [data-baseweb="base-input"] {
     background: linear-gradient(110deg, #5B392B, #A9673F) !important;
+    background-color: #5B392B !important;
     border: 1px solid #A9673F !important;
     border-radius: 12px !important;
     color: #FFFFFF !important;
     min-height: 46px;
 }
-div[data-testid="stSelectbox"] div[data-baseweb="select"] span,
-div[data-testid="stSelectbox"] div[data-baseweb="select"] input,
-div[data-testid="stDateInput"] div[data-baseweb="input"] input {
+/* Lapisan input tidak boleh menutupi gradasi */
+[data-testid="stSelectbox"] [data-baseweb="select"] > div > div,
+[data-testid="stDateInput"] [data-baseweb="input"] > div,
+[data-testid="stDateInput"] [data-baseweb="base-input"] > div,
+[data-testid="stDateInputField"] [data-baseweb="input"] > div {
+    background: transparent !important;
+}
+/* Teks, tanggal, placeholder, ikon */
+[data-testid="stSelectbox"] [data-baseweb="select"] *,
+[data-testid="stDateInput"] [data-baseweb="input"] *,
+[data-testid="stDateInput"] [data-baseweb="base-input"] *,
+[data-testid="stDateInputField"] [data-baseweb="input"] * {
     color: #FFFFFF !important;
     -webkit-text-fill-color: #FFFFFF !important;
 }
-div[data-testid="stSelectbox"] div[data-baseweb="select"] svg,
-div[data-testid="stDateInput"] div[data-baseweb="input"] svg {
-    fill: #FFFFFF !important;
+[data-testid="stSelectbox"] svg,
+[data-testid="stDateInput"] svg,
+[data-testid="stDateInputField"] svg {
     color: #FFFFFF !important;
+    fill: none !important;
+    stroke: #FFFFFF !important;
 }
-div[data-testid="stSelectbox"] div[data-baseweb="select"] > div > div,
-div[data-testid="stDateInput"] div[data-baseweb="input"] > div {
-    background-color: transparent !important;
+[data-testid="stDateInput"] input,
+[data-testid="stDateInputField"] input {
+    background: transparent !important;
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
 }
-div[data-testid="stSelectbox"] div[data-baseweb="select"] > div:focus-within,
-div[data-testid="stDateInput"] div[data-baseweb="input"]:focus-within {
+[data-testid="stSelectbox"] [data-baseweb="select"] > div:focus-within,
+[data-testid="stDateInput"] [data-baseweb="input"]:focus-within {
     border-color: #E6C39D !important;
-    box-shadow: 0 0 0 2px rgba(169, 103, 63, .2) !important;
+    box-shadow: 0 0 0 2px rgba(169, 103, 63, 0.2) !important;
 }
 </style>
 """, unsafe_allow_html=True)

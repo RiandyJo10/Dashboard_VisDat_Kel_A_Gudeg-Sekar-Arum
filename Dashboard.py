@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -106,8 +105,7 @@ div[data-testid="stPlotlyChart"] {
     font-size: 0.875rem;
     margin-bottom: 0.35rem;
 }
-/* Dropdown tanpa input ketik: tombol st.popover menggantikan selectbox. */
-/* HANYA tombol utama dua filter, bukan tombol pilihan pada menu. */
+
 .st-key-filter_outlet div[data-testid="stPopover"] > button,
 .st-key-filter_kanal div[data-testid="stPopover"] > button,
 .st-key-filter_outlet div[data-testid="stPopover"] > div > button,
@@ -123,7 +121,7 @@ div[data-testid="stPlotlyChart"] {
     box-shadow: none !important;
     text-align: left !important;
 }
-/* Penjagaan tambahan apabila wrapper popover berbeda antarrilis. */
+
 .st-key-filter_outlet [data-testid="stPopover"] button[kind="secondary"],
 .st-key-filter_kanal [data-testid="stPopover"] button[kind="secondary"] {
     background: linear-gradient(110deg, #5B392B, #A9673F) !important;
@@ -158,7 +156,7 @@ div[data-testid="stPlotlyChart"] {
     flex: 1 1 auto !important;
     text-align: left !important;
 }
-/* Rentang tanggal: pertahankan penampilan yang sudah berhasil. */
+
 .st-key-filter_tanggal [data-baseweb="input"],
 .st-key-filter_tanggal [data-baseweb="base-input"],
 .st-key-filter_tanggal [data-baseweb="input"] > div,
@@ -187,7 +185,7 @@ div[data-testid="stPlotlyChart"] {
     color: white !important;
     stroke: white !important;
 }
-/* Petunjuk penggunaan: jaga kontras saat dibuka */
+
 div[data-testid="stExpander"] details,
 div[data-testid="stExpander"] details summary,
 div[data-testid="stExpander"] details > div {
@@ -232,13 +230,13 @@ div[data-testid="stPlotlyChart"] {
     border-radius: 12px !important;
     overflow: hidden;
 }
-/* Jangan menekan gap semua blok sampai judul, insight, dan grafik bertumpuk. */
+
 [data-testid="stVerticalBlock"] {gap: .85rem !important;}
 [data-testid="stHorizontalBlock"] {gap: 1.1rem !important;}
 .stApp h3 {font-size: 1.04rem !important; line-height: 1.35 !important; margin-bottom: .25rem !important;}
 [data-testid="stCaptionContainer"] {line-height: 1.45 !important;}
 
-/* Tombol per grafik: kecil, rapi, dan rapat dengan judul serta insight. */
+
 .st-key-aksi_fig1a, .st-key-aksi_fig1b, .st-key-aksi_fig3,
 .st-key-aksi_fig5a, .st-key-aksi_fig2, .st-key-aksi_fig4,
 .st-key-aksi_fig5b, .st-key-aksi_fig6 {
@@ -276,7 +274,7 @@ div[data-testid="stPlotlyChart"] {
     margin: 0 !important;
 }
 
-/* Judul dan tombol Perbesar dalam baris yang sama, pada setiap grafik. */
+
 .judul-grafik {
     font-size: 1.04rem;
     font-weight: 650;

@@ -119,7 +119,7 @@ div[data-testid="stPlotlyChart"] {
     color: #FFFFFF !important;
     border-color: #A9673F !important;
 }
-* Lapisan di dalam kontrol tidak boleh menutup gradasi */
+/* Lapisan di dalam kontrol tidak boleh menutup gradasi */
 .st-key-filter_outlet [data-baseweb="select"] > div > div,
 .st-key-filter_kanal [data-baseweb="select"] > div > div,
 .st-key-filter_tanggal [data-baseweb="input"] > div > div,

@@ -101,41 +101,49 @@ div[data-testid="stPlotlyChart"] {
     border-radius: 14px;
     padding: 8px;
 }
-/* FILTER: gradasi pada seluruh bidang, termasuk area panah. */
-/* Target dibatasi pada dua selectbox dengan key spesifik. */
-.st-key-filter_outlet [data-baseweb="select"],
-.st-key-filter_kanal [data-baseweb="select"],
-.st-key-filter_outlet [data-baseweb="select"] [role="combobox"],
-.st-key-filter_kanal [data-baseweb="select"] [role="combobox"] {
-    background: linear-gradient(110deg, #5B392B, #A9673F) !important;
-    background-color: #5B392B !important;
-    border-color: #A9673F !important;
-    border-radius: 10px !important;
-    min-height: 42px;
-}
-/* Bagian dalam tidak boleh menjadi lapisan abu-abu di atas gradasi. */
-.st-key-filter_outlet [data-baseweb="select"] div:not([role="combobox"]),
-.st-key-filter_kanal [data-baseweb="select"] div:not([role="combobox"]),
-.st-key-filter_outlet [data-baseweb="select"] button,
-.st-key-filter_kanal [data-baseweb="select"] button,
-.st-key-filter_outlet [data-baseweb="select"] input,
-.st-key-filter_kanal [data-baseweb="select"] input {
-    background: transparent !important;
-    background-image: none !important;
+/* Dropdown Outlet dan Kanal: satu bidang gradasi menyatu. */
+/* Reset semua lapisan anak TERLEBIH DAHULU. */
+.st-key-filter_outlet [data-baseweb="select"] *,
+.st-key-filter_kanal [data-baseweb="select"] * {
     background-color: transparent !important;
+    background-image: none !important;
 }
-/* Tombol panah harus menyatu dengan bidang dropdown. */
+
+/* Letakkan gradasi pada permukaan utama dropdown. */
+.st-key-filter_outlet [data-baseweb="select"],
+.st-key-filter_kanal [data-baseweb="select"] {
+    background: linear-gradient(110deg, #5B392B, #A9673F) !important;
+    border: 1px solid #A9673F !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    min-height: 42px !important;
+}
+
+/* Lapisan combobox diberi gradasi pula untuk versi Streamlit
+   yang meletakkan bidang pilihan langsung di elemen combobox. */
+.st-key-filter_outlet [role="combobox"],
+.st-key-filter_kanal [role="combobox"] {
+    background: linear-gradient(110deg, #5B392B, #A9673F) !important;
+    border: 0 !important;
+    border-radius: 10px !important;
+    min-height: 42px !important;
+}
+
+/* Khusus tombol V: jangan gunakan latar putih/abu-abu. */
 .st-key-filter_outlet button[aria-label="Open"],
-.st-key-filter_kanal button[aria-label="Open"] {
+.st-key-filter_kanal button[aria-label="Open"],
+.st-key-filter_outlet button[aria-label="Close"],
+.st-key-filter_kanal button[aria-label="Close"] {
     background: transparent !important;
     border: 0 !important;
     box-shadow: none !important;
 }
-/* Teks pilihan putih, tanpa memengaruhi popup daftar opsi. */
-.st-key-filter_outlet [data-baseweb="select"] span,
-.st-key-filter_kanal [data-baseweb="select"] span,
+
+/* Warna teks pilihan dan tanda panah. */
 .st-key-filter_outlet [data-baseweb="select"] input,
-.st-key-filter_kanal [data-baseweb="select"] input {
+.st-key-filter_kanal [data-baseweb="select"] input,
+.st-key-filter_outlet [data-baseweb="select"] span,
+.st-key-filter_kanal [data-baseweb="select"] span {
     color: #FFFFFF !important;
     -webkit-text-fill-color: #FFFFFF !important;
 }
@@ -144,12 +152,13 @@ div[data-testid="stPlotlyChart"] {
     color: #FFFFFF !important;
     stroke: #FFFFFF !important;
 }
-/* Input pencarian tidak bisa diklik untuk mengetik; pengguna memilih lewat menu. */
+
+/* Jangan membuka papan ketik saat area input diklik.
+   Selectbox bawaan Streamlit tetap mendukung pencarian keyboard. */
 .st-key-filter_outlet [data-baseweb="select"] input,
 .st-key-filter_kanal [data-baseweb="select"] input {
     pointer-events: none !important;
     caret-color: transparent !important;
-    user-select: none !important;
 }
 /* Rentang tanggal: pertahankan penampilan yang sudah berhasil. */
 .st-key-filter_tanggal [data-baseweb="input"],

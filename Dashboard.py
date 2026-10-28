@@ -218,7 +218,7 @@ div[data-testid="stExpander"] details * {
 .kpi-note {font-size: .73rem !important; margin-top: 6px !important;}
 .insight {
     padding: 10px 12px !important;
-    margin: 8px 0 12px !important;
+    margin: 3px 0 7px !important;
     font-size: .84rem !important;
     line-height: 1.55 !important;
     overflow-wrap: anywhere;
@@ -237,6 +237,44 @@ div[data-testid="stPlotlyChart"] {
 [data-testid="stHorizontalBlock"] {gap: 1.1rem !important;}
 .stApp h3 {font-size: 1.04rem !important; line-height: 1.35 !important; margin-bottom: .25rem !important;}
 [data-testid="stCaptionContainer"] {line-height: 1.45 !important;}
+
+/* Tombol per grafik: kecil, rapi, dan rapat dengan judul serta insight. */
+.st-key-aksi_fig1a, .st-key-aksi_fig1b, .st-key-aksi_fig3,
+.st-key-aksi_fig5a, .st-key-aksi_fig2, .st-key-aksi_fig4,
+.st-key-aksi_fig5b, .st-key-aksi_fig6 {
+    margin-top: -0.48rem !important;
+    margin-bottom: -0.52rem !important;
+    width: max-content !important;
+    max-width: 100% !important;
+}
+.st-key-aksi_fig1a button, .st-key-aksi_fig1b button,
+.st-key-aksi_fig3 button, .st-key-aksi_fig5a button,
+.st-key-aksi_fig2 button, .st-key-aksi_fig4 button,
+.st-key-aksi_fig5b button, .st-key-aksi_fig6 button {
+    min-height: 27px !important;
+    height: 27px !important;
+    padding: 2px 9px !important;
+    font-size: 0.72rem !important;
+    line-height: 1.1 !important;
+    border-radius: 7px !important;
+    border: 1px solid #CDB9A6 !important;
+    color: #624432 !important;
+    background: #FFF9F1 !important;
+    box-shadow: none !important;
+}
+.st-key-aksi_fig1a button:hover, .st-key-aksi_fig1b button:hover,
+.st-key-aksi_fig3 button:hover, .st-key-aksi_fig5a button:hover,
+.st-key-aksi_fig2 button:hover, .st-key-aksi_fig4 button:hover,
+.st-key-aksi_fig5b button:hover, .st-key-aksi_fig6 button:hover {
+    background: #F3E9DF !important;
+}
+.st-key-aksi_fig1a button p, .st-key-aksi_fig1b button p,
+.st-key-aksi_fig3 button p, .st-key-aksi_fig5a button p,
+.st-key-aksi_fig2 button p, .st-key-aksi_fig4 button p,
+.st-key-aksi_fig5b button p, .st-key-aksi_fig6 button p {
+    font-size: 0.72rem !important;
+    margin: 0 !important;
+}
 
 </style>
 """, unsafe_allow_html=True)

@@ -304,7 +304,7 @@ def insight(teks):
 def gaya(fig, tinggi=440):
     fig.update_layout(
         template="plotly_white",
-        height=min(tinggi, 330),
+        height=min(tinggi, 330) if mode_grafik == "Semua grafik (2×2)" else max(tinggi, 435),
         paper_bgcolor=PUTIH,
         plot_bgcolor=PUTIH,
         font=dict(family="Arial", size=11, color=GELAP),
@@ -576,622 +576,660 @@ bulanan = bulanan[
 ].copy()
 
 
+mode_grafik = st.radio(
+    "Mode tampilan grafik",
+    ["Semua grafik (2×2)", "Fokus satu grafik"],
+    horizontal=True,
+    key="mode_grafik",
+    help="Pilih susunan empat grafik atau perbesar satu grafik untuk melihat detail."
+)
+
 tab1, tab2 = st.tabs(["📊 Ringkasan Bisnis", "🔍 Analisis Mendalam"])
 
 with tab1:
-    kiri_atas, kanan_atas = st.columns(2, gap="medium")
-    with kiri_atas:
-        st.subheader("Perbandingan Omzet Bersih Outlet")
-
-        outlet_utama = outlet.idxmax()
-        kontribusi_outlet = (
-            outlet.max() / total_omzet * 100
-            if total_omzet > 0 else 0
+    pilihan_bisnis = None
+    if mode_grafik == "Fokus satu grafik":
+        pilihan_bisnis = st.selectbox(
+            "Pilih grafik yang ingin diperbesar",
+            ["Omzet Bersih per Outlet", "Omzet per Kanal", "Proporsi Produk", "Tren Omzet Bulanan"],
+            key="grafik_fokus_bisnis"
         )
+    kiri_atas, kanan_atas = (st.columns(2, gap="medium")
+                              if mode_grafik == "Semua grafik (2×2)"
+                              else (st.container(), st.container()))
+    if mode_grafik == "Semua grafik (2×2)" or pilihan_bisnis == "Omzet Bersih per Outlet":
+        with kiri_atas:
+            st.subheader("Perbandingan Omzet Bersih Outlet")
 
-        insight(
-            f"{outlet_utama} menyumbang "
-            f"{persen(kontribusi_outlet)} "
-            "dari total omzet bersih pada "
-            "filter yang dipilih."
-        )
-
-        fig1a = go.Figure()
-
-        persen_outlet = (
-            outlet / total_omzet * 100
-            if total_omzet > 0 else outlet * 0
-        )
-
-        fig1a.add_trace(go.Bar(
-            x=outlet / 1_000_000_000,
-            y=outlet.index,
-            orientation="h",
-            marker_color=[
-                COKELAT if o == outlet_utama else ABU
-                for o in outlet.index
-            ],
-            text=[
-                f"Rp {v:.2f} M"
-                for v in outlet / 1_000_000_000
-            ],
-            textposition="outside",
-            customdata=np.column_stack((
-                outlet.values,
-                persen_outlet.values
-            )),
-            hovertemplate=(
-                "<b>%{y}</b><br>"
-                "Omzet: Rp%{customdata[0]:,.0f}<br>"
-                "Kontribusi: %{customdata[1]:.2f}%"
-                "<extra></extra>"
+            outlet_utama = outlet.idxmax()
+            kontribusi_outlet = (
+                outlet.max() / total_omzet * 100
+                if total_omzet > 0 else 0
             )
-        ))
 
-        fig1a.update_layout(
-            xaxis_title="Omzet bersih (miliar rupiah)",
-            yaxis_title="",
-            showlegend=False
-        )
-        fig1a.update_xaxes(
-            range=[
-                0,
-                max(outlet.max() / 1_000_000_000 * 1.4, 0.1)
-            ],
-            showgrid=False
-        )
+            insight(
+                f"{outlet_utama} menyumbang "
+                f"{persen(kontribusi_outlet)} "
+                "dari total omzet bersih pada "
+                "filter yang dipilih."
+            )
 
-        gaya(fig1a)
-        tampil(fig1a, "fig1a")
+            fig1a = go.Figure()
+
+            persen_outlet = (
+                outlet / total_omzet * 100
+                if total_omzet > 0 else outlet * 0
+            )
+
+            fig1a.add_trace(go.Bar(
+                x=outlet / 1_000_000_000,
+                y=outlet.index,
+                orientation="h",
+                marker_color=[
+                    COKELAT if o == outlet_utama else ABU
+                    for o in outlet.index
+                ],
+                text=[
+                    f"Rp {v:.2f} M"
+                    for v in outlet / 1_000_000_000
+                ],
+                textposition="outside",
+                customdata=np.column_stack((
+                    outlet.values,
+                    persen_outlet.values
+                )),
+                hovertemplate=(
+                    "<b>%{y}</b><br>"
+                    "Omzet: Rp%{customdata[0]:,.0f}<br>"
+                    "Kontribusi: %{customdata[1]:.2f}%"
+                    "<extra></extra>"
+                )
+            ))
+
+            fig1a.update_layout(
+                xaxis_title="Omzet bersih (miliar rupiah)",
+                yaxis_title="",
+                showlegend=False
+            )
+            fig1a.update_xaxes(
+                range=[
+                    0,
+                    max(outlet.max() / 1_000_000_000 * 1.4, 0.1)
+                ],
+                showgrid=False
+            )
+
+            gaya(fig1a)
+            tampil(fig1a, "fig1a")
 
 
 
-    with kanan_atas:
-        st.subheader("Perbandingan Omzet Kanal Penjualan")
+    if mode_grafik == "Semua grafik (2×2)" or pilihan_bisnis == "Omzet per Kanal":
+        with kanan_atas:
+            st.subheader("Perbandingan Omzet Kanal Penjualan")
 
-        kanal_utama = kanal.idxmax()
-        kontribusi_kanal = (
-            kanal.max() / total_omzet * 100
-            if total_omzet > 0 else 0
-        )
+            kanal_utama = kanal.idxmax()
+            kontribusi_kanal = (
+                kanal.max() / total_omzet * 100
+                if total_omzet > 0 else 0
+            )
 
-        insight(
-            f"Kanal {kanal_utama} menyumbang "
-            f"{persen(kontribusi_kanal)} "
-            "dari total omzet bersih pada "
-            "filter yang dipilih."
-        )
+            insight(
+                f"Kanal {kanal_utama} menyumbang "
+                f"{persen(kontribusi_kanal)} "
+                "dari total omzet bersih pada "
+                "filter yang dipilih."
+            )
 
-        fig1b = go.Figure()
+            fig1b = go.Figure()
 
-        persen_kanal = (
-            kanal / total_omzet * 100
-            if total_omzet > 0 else kanal * 0
-        )
+            persen_kanal = (
+                kanal / total_omzet * 100
+                if total_omzet > 0 else kanal * 0
+            )
 
-        fig1b.add_trace(go.Scatter(
-            x=kanal / 1_000_000_000,
-            y=kanal.index,
-            mode="markers+text",
-            marker=dict(
-                size=17,
-                color=[
-                    COKELAT if k == kanal_utama
-                    else "#9DA7B1"
-                    for k in kanal.index
+            fig1b.add_trace(go.Scatter(
+                x=kanal / 1_000_000_000,
+                y=kanal.index,
+                mode="markers+text",
+                marker=dict(
+                    size=17,
+                    color=[
+                        COKELAT if k == kanal_utama
+                        else "#9DA7B1"
+                        for k in kanal.index
+                    ]
+                ),
+                text=[
+                    f"Rp {v:.2f} M"
+                    for v in kanal / 1_000_000_000
+                ],
+                textposition="middle right",
+                customdata=np.column_stack((
+                    kanal.values,
+                    persen_kanal.values
+                )),
+                hovertemplate=(
+                    "<b>%{y}</b><br>"
+                    "Omzet: Rp%{customdata[0]:,.0f}<br>"
+                    "Kontribusi: %{customdata[1]:.2f}%"
+                    "<extra></extra>"
+                )
+            ))
+
+            fig1b.update_layout(
+                xaxis_title="Omzet bersih (miliar rupiah)",
+                yaxis_title="",
+                showlegend=False
+            )
+            fig1b.update_xaxes(
+                range=[
+                    0,
+                    max(kanal.max() / 1_000_000_000 * 1.45, 0.1)
                 ]
-            ),
-            text=[
-                f"Rp {v:.2f} M"
-                for v in kanal / 1_000_000_000
-            ],
-            textposition="middle right",
-            customdata=np.column_stack((
-                kanal.values,
-                persen_kanal.values
-            )),
-            hovertemplate=(
-                "<b>%{y}</b><br>"
-                "Omzet: Rp%{customdata[0]:,.0f}<br>"
-                "Kontribusi: %{customdata[1]:.2f}%"
-                "<extra></extra>"
-            )
-        ))
-
-        fig1b.update_layout(
-            xaxis_title="Omzet bersih (miliar rupiah)",
-            yaxis_title="",
-            showlegend=False
-        )
-        fig1b.update_xaxes(
-            range=[
-                0,
-                max(kanal.max() / 1_000_000_000 * 1.45, 0.1)
-            ]
-        )
-
-        gaya(fig1b)
-        tampil(fig1b, "fig1b")
-
-
-
-    kiri_bawah, kanan_bawah = st.columns(2, gap="medium")
-    with kiri_bawah:
-        st.subheader("Proporsi Omzet Produk Sebelum Diskon")
-
-        omzet_gudeg = data["Omzet_Gudeg_Rp"].sum()
-        omzet_oleh = data["Omzet_Oleh_Oleh_Rp"].sum()
-        total_produk = omzet_gudeg + omzet_oleh
-
-        if total_produk > 0:
-            pg = omzet_gudeg / total_produk * 100
-            po = omzet_oleh / total_produk * 100
-
-            produk_utama = (
-                "Gudeg" if omzet_gudeg > omzet_oleh
-                else "Oleh-oleh" if omzet_oleh > omzet_gudeg
-                else None
             )
 
-            if produk_utama:
-                insight(
-                    f"{produk_utama} memberikan kontribusi "
-                    f"omzet sebelum diskon terbesar "
-                    f"({persen(max(pg, po))}). "
-                    f"Total omzet produk adalah "
-                    f"{rupiah(total_produk)}."
+            gaya(fig1b)
+            tampil(fig1b, "fig1b")
+
+
+
+    kiri_bawah, kanan_bawah = (st.columns(2, gap="medium")
+                                if mode_grafik == "Semua grafik (2×2)"
+                                else (st.container(), st.container()))
+    if mode_grafik == "Semua grafik (2×2)" or pilihan_bisnis == "Proporsi Produk":
+        with kiri_bawah:
+            st.subheader("Proporsi Omzet Produk Sebelum Diskon")
+
+            omzet_gudeg = data["Omzet_Gudeg_Rp"].sum()
+            omzet_oleh = data["Omzet_Oleh_Oleh_Rp"].sum()
+            total_produk = omzet_gudeg + omzet_oleh
+
+            if total_produk > 0:
+                pg = omzet_gudeg / total_produk * 100
+                po = omzet_oleh / total_produk * 100
+
+                produk_utama = (
+                    "Gudeg" if omzet_gudeg > omzet_oleh
+                    else "Oleh-oleh" if omzet_oleh > omzet_gudeg
+                    else None
+                )
+
+                if produk_utama:
+                    insight(
+                        f"{produk_utama} memberikan kontribusi "
+                        f"omzet sebelum diskon terbesar "
+                        f"({persen(max(pg, po))}). "
+                        f"Total omzet produk adalah "
+                        f"{rupiah(total_produk)}."
+                    )
+                else:
+                    insight(
+                        "Gudeg dan Oleh-oleh memiliki "
+                        "kontribusi omzet sebelum diskon "
+                        "yang sama."
+                    )
+
+                fig3 = go.Figure()
+
+                for nama, nilai, bagian, warna in [
+                    ("Gudeg", omzet_gudeg, pg, COKELAT),
+                    ("Oleh-oleh", omzet_oleh, po, HIJAU)
+                ]:
+                    fig3.add_trace(go.Bar(
+                        x=[bagian],
+                        y=["Total Usaha"],
+                        orientation="h",
+                        name=nama,
+                        marker_color=warna,
+                        text=[persen(bagian)],
+                        textposition="inside",
+                        textfont=dict(color="white", size=15),
+                        customdata=[[nilai]],
+                        hovertemplate=(
+                            f"<b>{nama}</b><br>"
+                            "Kontribusi: %{x:.2f}%<br>"
+                            "Omzet: Rp%{customdata[0]:,.0f}"
+                            "<extra></extra>"
+                        )
+                    ))
+
+                fig3.update_layout(
+                    barmode="stack",
+                    xaxis=dict(
+                        title="Kontribusi omzet (%)",
+                        range=[0, 100],
+                        ticksuffix="%",
+                        showgrid=False
+                    ),
+                    yaxis_title="",
+                    legend=dict(
+                        orientation="h",
+                        x=0.5,
+                        xanchor="center",
+                        y=1.2
+                    )
+                )
+
+                gaya(fig3, 300)
+                tampil(fig3, "fig3")
+                st.caption(
+                    "Proporsi menggunakan omzet produk sebelum "
+                    "diskon, bukan omzet bersih."
                 )
             else:
-                insight(
-                    "Gudeg dan Oleh-oleh memiliki "
-                    "kontribusi omzet sebelum diskon "
-                    "yang sama."
-                )
+                st.info("Tidak ada omzet produk pada filter ini.")
 
-            fig3 = go.Figure()
 
-            for nama, nilai, bagian, warna in [
-                ("Gudeg", omzet_gudeg, pg, COKELAT),
-                ("Oleh-oleh", omzet_oleh, po, HIJAU)
-            ]:
-                fig3.add_trace(go.Bar(
-                    x=[bagian],
-                    y=["Total Usaha"],
-                    orientation="h",
+
+    if mode_grafik == "Semua grafik (2×2)" or pilihan_bisnis == "Tren Omzet Bulanan":
+        with kanan_bawah:
+            st.subheader("Tren Omzet Bersih Bulanan")
+
+            bulan_tertinggi = bulanan.loc[
+                bulanan["Omzet_Bersih_Rp"].idxmax()
+            ]
+            bulan_terendah = bulanan.loc[
+                bulanan["Omzet_Bersih_Rp"].idxmin()
+            ]
+
+            nama_tinggi = BULAN[
+                bulan_tertinggi["Tanggal"].month - 1
+            ]
+            nama_rendah = BULAN[
+                bulan_terendah["Tanggal"].month - 1
+            ]
+
+            insight(
+                f"Omzet bulanan tertinggi pada data terpilih "
+                f"terjadi pada {nama_tinggi} "
+                f"({rupiah(bulan_tertinggi['Omzet_Bersih_Rp'])}), "
+                f"sedangkan yang terendah pada {nama_rendah} "
+                f"({rupiah(bulan_terendah['Omzet_Bersih_Rp'])})."
+            )
+
+            fig5a = go.Figure()
+
+            fig5a.add_trace(go.Scatter(
+                x=bulanan["Tanggal"],
+                y=bulanan["Omzet_Bersih_Rp"] / 1_000_000_000,
+                mode="lines+markers",
+                line=dict(color=COKELAT, width=3),
+                marker=dict(size=8),
+                customdata=bulanan[
+                    ["Omzet_Bersih_Rp"]
+                ].to_numpy(),
+                hovertemplate=(
+                    "<b>%{x|%b %Y}</b><br>"
+                    "Omzet: Rp%{customdata[0]:,.0f}"
+                    "<extra></extra>"
+                ),
+                showlegend=False
+            ))
+
+            fig5a.add_trace(go.Scatter(
+                x=[
+                    bulan_tertinggi["Tanggal"],
+                    bulan_terendah["Tanggal"]
+                ],
+                y=[
+                    bulan_tertinggi["Omzet_Bersih_Rp"] / 1e9,
+                    bulan_terendah["Omzet_Bersih_Rp"] / 1e9
+                ],
+                mode="markers",
+                marker=dict(
+                    color=[HIJAU, "#B45B4C"],
+                    size=13,
+                    line=dict(color="white", width=2)
+                ),
+                showlegend=False,
+                hoverinfo="skip"
+            ))
+
+            fig5a.update_layout(
+                xaxis_title="Bulan",
+                yaxis_title="Omzet bersih (miliar rupiah)"
+            )
+            fig5a.update_xaxes(
+                tickformat="%b %Y",
+                dtick="M1",
+                showgrid=False
+            )
+
+            gaya(fig5a)
+            tampil(fig5a, "fig5a")
+
+
+with tab2:
+    pilihan_mendalam = None
+    if mode_grafik == "Fokus satu grafik":
+        pilihan_mendalam = st.selectbox(
+            "Pilih grafik yang ingin diperbesar",
+            ["Distribusi Omzet Harian", "Transaksi vs Omzet", "Moving Average 7 Hari", "Rating Pelanggan"],
+            key="grafik_fokus_mendalam"
+        )
+    kiri_atas, kanan_atas = (st.columns(2, gap="medium")
+                              if mode_grafik == "Semua grafik (2×2)"
+                              else (st.container(), st.container()))
+    if mode_grafik == "Semua grafik (2×2)" or pilihan_mendalam == "Distribusi Omzet Harian":
+        with kiri_atas:
+            st.subheader("Distribusi Omzet Harian per Outlet")
+
+            boxdata = harian_outlet.copy()
+            boxdata["Juta"] = (
+                boxdata["Omzet_Bersih_Rp"] / 1_000_000
+            )
+
+            median = (
+                boxdata.groupby("Outlet")["Juta"]
+                .median()
+                .sort_values(ascending=False)
+            )
+
+            insight(
+                f"{median.idxmax()} memiliki median omzet "
+                f"harian tertinggi sebesar "
+                f"Rp {skor(median.max())} juta "
+                "pada periode terpilih."
+            )
+
+            fig2 = go.Figure()
+
+            for nama in median.index:
+                bagian = boxdata[boxdata["Outlet"] == nama]
+
+                fig2.add_trace(go.Box(
+                    x=[nama] * len(bagian),
+                    y=bagian["Juta"],
                     name=nama,
-                    marker_color=warna,
-                    text=[persen(bagian)],
-                    textposition="inside",
-                    textfont=dict(color="white", size=15),
-                    customdata=[[nilai]],
+                    marker_color=WARNA_OUTLET.get(nama, ABU),
+                    boxpoints="outliers",
+                    showlegend=False,
                     hovertemplate=(
                         f"<b>{nama}</b><br>"
-                        "Kontribusi: %{x:.2f}%<br>"
-                        "Omzet: Rp%{customdata[0]:,.0f}"
+                        "Omzet harian: Rp%{y:.2f} juta"
                         "<extra></extra>"
                     )
                 ))
 
-            fig3.update_layout(
-                barmode="stack",
-                xaxis=dict(
-                    title="Kontribusi omzet (%)",
-                    range=[0, 100],
-                    ticksuffix="%",
-                    showgrid=False
-                ),
-                yaxis_title="",
+            fig2.update_layout(
+                xaxis_title="Outlet",
+                yaxis_title="Omzet harian (juta rupiah)"
+            )
+            gaya(fig2, 480)
+            tampil(fig2, "fig2")
+
+
+
+    if mode_grafik == "Semua grafik (2×2)" or pilihan_mendalam == "Transaksi vs Omzet":
+        with kanan_atas:
+            st.subheader("Transaksi vs Omzet Bersih Harian")
+
+            scatter = harian_outlet.copy()
+            scatter["Juta"] = (
+                scatter["Omzet_Bersih_Rp"] / 1_000_000
+            )
+            scatter["Tanggal_Label"] = (
+                scatter["Tanggal"].dt.strftime("%d-%m-%Y")
+            )
+
+            r = scatter[
+                ["Jumlah_Transaksi", "Juta"]
+            ].corr().iloc[0, 1]
+
+            if pd.notna(r):
+                arah = (
+                    "positif" if r > 0
+                    else "negatif" if r < 0
+                    else "mendekati nol"
+                )
+                insight(
+                    f"Korelasi Pearson antara jumlah transaksi "
+                    f"harian dan omzet bersih adalah "
+                    f"{skor(r)} ({arah}). "
+                    "Korelasi ini menunjukkan hubungan, "
+                    "bukan bukti sebab-akibat."
+                )
+            else:
+                insight(
+                    "Korelasi tidak dapat dihitung secara "
+                    "andal pada pilihan data ini."
+                )
+
+            fig4 = go.Figure()
+
+            for nama in scatter["Outlet"].unique():
+                bagian = scatter[
+                    scatter["Outlet"] == nama
+                ]
+
+                fig4.add_trace(go.Scatter(
+                    x=bagian["Jumlah_Transaksi"],
+                    y=bagian["Juta"],
+                    mode="markers",
+                    name=nama,
+                    marker=dict(
+                        color=WARNA_OUTLET.get(nama, ABU),
+                        size=7,
+                        opacity=0.6
+                    ),
+                    customdata=bagian[
+                        ["Tanggal_Label"]
+                    ].to_numpy(),
+                    hovertemplate=(
+                        f"<b>{nama}</b><br>"
+                        "Tanggal: %{customdata[0]}<br>"
+                        "Transaksi: %{x:,.0f}<br>"
+                        "Omzet: Rp%{y:.2f} juta"
+                        "<extra></extra>"
+                    )
+                ))
+
+            fig4.update_layout(
+                xaxis_title="Jumlah transaksi harian",
+                yaxis_title="Omzet harian (juta rupiah)",
                 legend=dict(
                     orientation="h",
                     x=0.5,
                     xanchor="center",
-                    y=1.2
+                    y=1.13
                 )
             )
 
-            gaya(fig3, 300)
-            tampil(fig3, "fig3")
-            st.caption(
-                "Proporsi menggunakan omzet produk sebelum "
-                "diskon, bukan omzet bersih."
-            )
-        else:
-            st.info("Tidak ada omzet produk pada filter ini.")
+            gaya(fig4, 490)
+            tampil(fig4, "fig4")
 
 
 
-    with kanan_bawah:
-        st.subheader("Tren Omzet Bersih Bulanan")
-
-        bulan_tertinggi = bulanan.loc[
-            bulanan["Omzet_Bersih_Rp"].idxmax()
-        ]
-        bulan_terendah = bulanan.loc[
-            bulanan["Omzet_Bersih_Rp"].idxmin()
-        ]
-
-        nama_tinggi = BULAN[
-            bulan_tertinggi["Tanggal"].month - 1
-        ]
-        nama_rendah = BULAN[
-            bulan_terendah["Tanggal"].month - 1
-        ]
-
-        insight(
-            f"Omzet bulanan tertinggi pada data terpilih "
-            f"terjadi pada {nama_tinggi} "
-            f"({rupiah(bulan_tertinggi['Omzet_Bersih_Rp'])}), "
-            f"sedangkan yang terendah pada {nama_rendah} "
-            f"({rupiah(bulan_terendah['Omzet_Bersih_Rp'])})."
-        )
-
-        fig5a = go.Figure()
-
-        fig5a.add_trace(go.Scatter(
-            x=bulanan["Tanggal"],
-            y=bulanan["Omzet_Bersih_Rp"] / 1_000_000_000,
-            mode="lines+markers",
-            line=dict(color=COKELAT, width=3),
-            marker=dict(size=8),
-            customdata=bulanan[
-                ["Omzet_Bersih_Rp"]
-            ].to_numpy(),
-            hovertemplate=(
-                "<b>%{x|%b %Y}</b><br>"
-                "Omzet: Rp%{customdata[0]:,.0f}"
-                "<extra></extra>"
-            ),
-            showlegend=False
-        ))
-
-        fig5a.add_trace(go.Scatter(
-            x=[
-                bulan_tertinggi["Tanggal"],
-                bulan_terendah["Tanggal"]
-            ],
-            y=[
-                bulan_tertinggi["Omzet_Bersih_Rp"] / 1e9,
-                bulan_terendah["Omzet_Bersih_Rp"] / 1e9
-            ],
-            mode="markers",
-            marker=dict(
-                color=[HIJAU, "#B45B4C"],
-                size=13,
-                line=dict(color="white", width=2)
-            ),
-            showlegend=False,
-            hoverinfo="skip"
-        ))
-
-        fig5a.update_layout(
-            xaxis_title="Bulan",
-            yaxis_title="Omzet bersih (miliar rupiah)"
-        )
-        fig5a.update_xaxes(
-            tickformat="%b %Y",
-            dtick="M1",
-            showgrid=False
-        )
-
-        gaya(fig5a)
-        tampil(fig5a, "fig5a")
-
-
-with tab2:
-    kiri_atas, kanan_atas = st.columns(2, gap="medium")
-    with kiri_atas:
-        st.subheader("Distribusi Omzet Harian per Outlet")
-
-        boxdata = harian_outlet.copy()
-        boxdata["Juta"] = (
-            boxdata["Omzet_Bersih_Rp"] / 1_000_000
-        )
-
-        median = (
-            boxdata.groupby("Outlet")["Juta"]
-            .median()
-            .sort_values(ascending=False)
-        )
-
-        insight(
-            f"{median.idxmax()} memiliki median omzet "
-            f"harian tertinggi sebesar "
-            f"Rp {skor(median.max())} juta "
-            "pada periode terpilih."
-        )
-
-        fig2 = go.Figure()
-
-        for nama in median.index:
-            bagian = boxdata[boxdata["Outlet"] == nama]
-
-            fig2.add_trace(go.Box(
-                x=[nama] * len(bagian),
-                y=bagian["Juta"],
-                name=nama,
-                marker_color=WARNA_OUTLET.get(nama, ABU),
-                boxpoints="outliers",
-                showlegend=False,
-                hovertemplate=(
-                    f"<b>{nama}</b><br>"
-                    "Omzet harian: Rp%{y:.2f} juta"
-                    "<extra></extra>"
-                )
-            ))
-
-        fig2.update_layout(
-            xaxis_title="Outlet",
-            yaxis_title="Omzet harian (juta rupiah)"
-        )
-        gaya(fig2, 480)
-        tampil(fig2, "fig2")
-
-
-
-    with kanan_atas:
-        st.subheader("Transaksi vs Omzet Bersih Harian")
-
-        scatter = harian_outlet.copy()
-        scatter["Juta"] = (
-            scatter["Omzet_Bersih_Rp"] / 1_000_000
-        )
-        scatter["Tanggal_Label"] = (
-            scatter["Tanggal"].dt.strftime("%d-%m-%Y")
-        )
-
-        r = scatter[
-            ["Jumlah_Transaksi", "Juta"]
-        ].corr().iloc[0, 1]
-
-        if pd.notna(r):
-            arah = (
-                "positif" if r > 0
-                else "negatif" if r < 0
-                else "mendekati nol"
-            )
-            insight(
-                f"Korelasi Pearson antara jumlah transaksi "
-                f"harian dan omzet bersih adalah "
-                f"{skor(r)} ({arah}). "
-                "Korelasi ini menunjukkan hubungan, "
-                "bukan bukti sebab-akibat."
-            )
-        else:
-            insight(
-                "Korelasi tidak dapat dihitung secara "
-                "andal pada pilihan data ini."
+    kiri_bawah, kanan_bawah = (st.columns(2, gap="medium")
+                                if mode_grafik == "Semua grafik (2×2)"
+                                else (st.container(), st.container()))
+    if mode_grafik == "Semua grafik (2×2)" or pilihan_mendalam == "Moving Average 7 Hari":
+        with kiri_bawah:
+            st.subheader(
+                "Omzet Harian dan Rata-rata Bergerak 7 Hari"
             )
 
-        fig4 = go.Figure()
+            ma = harian.copy()
+            ma["Juta"] = ma["Omzet_Bersih_Rp"] / 1e6
 
-        for nama in scatter["Outlet"].unique():
-            bagian = scatter[
-                scatter["Outlet"] == nama
-            ]
-
-            fig4.add_trace(go.Scatter(
-                x=bagian["Jumlah_Transaksi"],
-                y=bagian["Juta"],
-                mode="markers",
-                name=nama,
-                marker=dict(
-                    color=WARNA_OUTLET.get(nama, ABU),
-                    size=7,
-                    opacity=0.6
-                ),
-                customdata=bagian[
-                    ["Tanggal_Label"]
-                ].to_numpy(),
-                hovertemplate=(
-                    f"<b>{nama}</b><br>"
-                    "Tanggal: %{customdata[0]}<br>"
-                    "Transaksi: %{x:,.0f}<br>"
-                    "Omzet: Rp%{y:.2f} juta"
-                    "<extra></extra>"
-                )
-            ))
-
-        fig4.update_layout(
-            xaxis_title="Jumlah transaksi harian",
-            yaxis_title="Omzet harian (juta rupiah)",
-            legend=dict(
-                orientation="h",
-                x=0.5,
-                xanchor="center",
-                y=1.13
-            )
-        )
-
-        gaya(fig4, 490)
-        tampil(fig4, "fig4")
-
-
-
-    kiri_bawah, kanan_bawah = st.columns(2, gap="medium")
-    with kiri_bawah:
-        st.subheader(
-            "Omzet Harian dan Rata-rata Bergerak 7 Hari"
-        )
-
-        ma = harian.copy()
-        ma["Juta"] = ma["Omzet_Bersih_Rp"] / 1e6
-
-        # Reindex ke tanggal kalender agar jendela
-        # benar-benar mewakili tujuh hari.
-        kalender = pd.date_range(
-            start=awal,
-            end=akhir,
-            freq="D"
-        )
-
-        ma = (
-            ma.set_index("Tanggal")
-            .reindex(kalender)
-            .rename_axis("Tanggal")
-            .reset_index()
-        )
-
-        ma["MA7"] = (
-            ma["Omzet_Bersih_Rp"]
-            .rolling(window=7, min_periods=7)
-            .mean() / 1e6
-        )
-
-        valid_ma = ma.dropna(subset=["MA7"])
-
-        if not valid_ma.empty:
-            puncak = valid_ma.loc[
-                valid_ma["MA7"].idxmax()
-            ]
-
-            insight(
-                "Rata-rata omzet bersih 7 hari mencapai "
-                f"puncak {rupiah(puncak['MA7'] * 1e6)} "
-                "per hari, untuk periode yang berakhir "
-                f"{puncak['Tanggal'].strftime('%d/%m/%Y')}."
-            )
-        else:
-            insight(
-                "Rata-rata bergerak 7 hari belum tersedia "
-                "karena periode terpilih belum mencakup "
-                "tujuh hari kalender dengan data lengkap."
+            # Reindex ke tanggal kalender agar jendela
+            # benar-benar mewakili tujuh hari.
+            kalender = pd.date_range(
+                start=awal,
+                end=akhir,
+                freq="D"
             )
 
-        fig5b = go.Figure()
-
-        fig5b.add_trace(go.Scatter(
-            x=ma["Tanggal"],
-            y=ma["Juta"],
-            mode="lines",
-            name="Omzet harian",
-            line=dict(color="#C6CDD5", width=1.2)
-        ))
-
-        fig5b.add_trace(go.Scatter(
-            x=ma["Tanggal"],
-            y=ma["MA7"],
-            mode="lines",
-            name="Rata-rata bergerak 7 hari",
-            line=dict(color=COKELAT, width=3.2)
-        ))
-
-        if not valid_ma.empty:
-            fig5b.add_trace(go.Scatter(
-                x=[puncak["Tanggal"]],
-                y=[puncak["MA7"]],
-                mode="markers",
-                marker=dict(
-                    color=COKELAT,
-                    size=12,
-                    line=dict(color="white", width=2)
-                ),
-                showlegend=False,
-                hovertemplate=(
-                    "Puncak MA 7 hari<br>"
-                    "%{x|%d %b %Y}<br>"
-                    "Rp%{y:.2f} juta"
-                    "<extra></extra>"
-                )
-            ))
-
-        fig5b.update_layout(
-            xaxis_title="Tanggal",
-            yaxis_title="Omzet harian (juta rupiah)",
-            hovermode="x unified",
-            legend=dict(
-                orientation="h",
-                x=0.5,
-                xanchor="center",
-                y=1.13
-            )
-        )
-
-        gaya(fig5b, 490)
-        tampil(fig5b, "fig5b")
-
-
-
-    with kanan_bawah:
-        st.subheader("Rating Pelanggan per Outlet")
-
-        if not valid.empty:
-            rating = valid.copy()
-
-            rating["Skor"] = (
-                rating["Rating_Rata_rata"]
-                * rating["Jumlah_Ulasan"]
+            ma = (
+                ma.set_index("Tanggal")
+                .reindex(kalender)
+                .rename_axis("Tanggal")
+                .reset_index()
             )
 
-            rating = rating.groupby("Outlet").agg(
-                Skor=("Skor", "sum"),
-                Ulasan=("Jumlah_Ulasan", "sum")
+            ma["MA7"] = (
+                ma["Omzet_Bersih_Rp"]
+                .rolling(window=7, min_periods=7)
+                .mean() / 1e6
             )
 
-            rating["Nilai"] = (
-                rating["Skor"] / rating["Ulasan"]
-            )
+            valid_ma = ma.dropna(subset=["MA7"])
 
-            rating = rating.sort_values("Nilai")
+            if not valid_ma.empty:
+                puncak = valid_ma.loc[
+                    valid_ma["MA7"].idxmax()
+                ]
 
-            tertinggi = rating["Nilai"].idxmax()
-            terendah = rating["Nilai"].idxmin()
-
-            if tertinggi != terendah:
-                teks_rating = (
-                    f"{tertinggi} memiliki rating tertinggi "
-                    f"({skor(rating.loc[tertinggi, 'Nilai'])}/5), "
-                    f"sedangkan {terendah} terendah "
-                    f"({skor(rating.loc[terendah, 'Nilai'])}/5) "
-                    "pada pilihan filter."
+                insight(
+                    "Rata-rata omzet bersih 7 hari mencapai "
+                    f"puncak {rupiah(puncak['MA7'] * 1e6)} "
+                    "per hari, untuk periode yang berakhir "
+                    f"{puncak['Tanggal'].strftime('%d/%m/%Y')}."
                 )
             else:
-                teks_rating = (
-                    f"Rating berbobot {tertinggi} adalah "
-                    f"{skor(rating.loc[tertinggi, 'Nilai'])}/5 "
-                    "pada pilihan filter."
+                insight(
+                    "Rata-rata bergerak 7 hari belum tersedia "
+                    "karena periode terpilih belum mencakup "
+                    "tujuh hari kalender dengan data lengkap."
                 )
 
-            insight(teks_rating)
+            fig5b = go.Figure()
 
-            fig6 = go.Figure()
-
-            fig6.add_trace(go.Bar(
-                x=rating["Nilai"],
-                y=rating.index,
-                orientation="h",
-                marker_color=[
-                    COKELAT if o == terendah else "#AEB9C4"
-                    for o in rating.index
-                ],
-                text=[
-                    skor(v) for v in rating["Nilai"]
-                ],
-                textposition="outside",
-                customdata=rating[["Ulasan"]].to_numpy(),
-                hovertemplate=(
-                    "<b>%{y}</b><br>"
-                    "Rating: %{x:.2f}/5<br>"
-                    "Ulasan: %{customdata[0]:,.0f}"
-                    "<extra></extra>"
-                )
+            fig5b.add_trace(go.Scatter(
+                x=ma["Tanggal"],
+                y=ma["Juta"],
+                mode="lines",
+                name="Omzet harian",
+                line=dict(color="#C6CDD5", width=1.2)
             ))
 
-            fig6.update_layout(
-                xaxis_title="Rating berbobot (0–5)",
-                yaxis_title="",
-                showlegend=False
-            )
-            fig6.update_xaxes(
-                range=[0, 5.15],
-                dtick=1,
-                showgrid=False
+            fig5b.add_trace(go.Scatter(
+                x=ma["Tanggal"],
+                y=ma["MA7"],
+                mode="lines",
+                name="Rata-rata bergerak 7 hari",
+                line=dict(color=COKELAT, width=3.2)
+            ))
+
+            if not valid_ma.empty:
+                fig5b.add_trace(go.Scatter(
+                    x=[puncak["Tanggal"]],
+                    y=[puncak["MA7"]],
+                    mode="markers",
+                    marker=dict(
+                        color=COKELAT,
+                        size=12,
+                        line=dict(color="white", width=2)
+                    ),
+                    showlegend=False,
+                    hovertemplate=(
+                        "Puncak MA 7 hari<br>"
+                        "%{x|%d %b %Y}<br>"
+                        "Rp%{y:.2f} juta"
+                        "<extra></extra>"
+                    )
+                ))
+
+            fig5b.update_layout(
+                xaxis_title="Tanggal",
+                yaxis_title="Omzet harian (juta rupiah)",
+                hovermode="x unified",
+                legend=dict(
+                    orientation="h",
+                    x=0.5,
+                    xanchor="center",
+                    y=1.13
+                )
             )
 
-            gaya(fig6, 430)
-            tampil(fig6, "fig6")
+            gaya(fig5b, 490)
+            tampil(fig5b, "fig5b")
 
-        else:
-            st.info("Tidak ada data rating yang valid.")
+
+
+    if mode_grafik == "Semua grafik (2×2)" or pilihan_mendalam == "Rating Pelanggan":
+        with kanan_bawah:
+            st.subheader("Rating Pelanggan per Outlet")
+
+            if not valid.empty:
+                rating = valid.copy()
+
+                rating["Skor"] = (
+                    rating["Rating_Rata_rata"]
+                    * rating["Jumlah_Ulasan"]
+                )
+
+                rating = rating.groupby("Outlet").agg(
+                    Skor=("Skor", "sum"),
+                    Ulasan=("Jumlah_Ulasan", "sum")
+                )
+
+                rating["Nilai"] = (
+                    rating["Skor"] / rating["Ulasan"]
+                )
+
+                rating = rating.sort_values("Nilai")
+
+                tertinggi = rating["Nilai"].idxmax()
+                terendah = rating["Nilai"].idxmin()
+
+                if tertinggi != terendah:
+                    teks_rating = (
+                        f"{tertinggi} memiliki rating tertinggi "
+                        f"({skor(rating.loc[tertinggi, 'Nilai'])}/5), "
+                        f"sedangkan {terendah} terendah "
+                        f"({skor(rating.loc[terendah, 'Nilai'])}/5) "
+                        "pada pilihan filter."
+                    )
+                else:
+                    teks_rating = (
+                        f"Rating berbobot {tertinggi} adalah "
+                        f"{skor(rating.loc[tertinggi, 'Nilai'])}/5 "
+                        "pada pilihan filter."
+                    )
+
+                insight(teks_rating)
+
+                fig6 = go.Figure()
+
+                fig6.add_trace(go.Bar(
+                    x=rating["Nilai"],
+                    y=rating.index,
+                    orientation="h",
+                    marker_color=[
+                        COKELAT if o == terendah else "#AEB9C4"
+                        for o in rating.index
+                    ],
+                    text=[
+                        skor(v) for v in rating["Nilai"]
+                    ],
+                    textposition="outside",
+                    customdata=rating[["Ulasan"]].to_numpy(),
+                    hovertemplate=(
+                        "<b>%{y}</b><br>"
+                        "Rating: %{x:.2f}/5<br>"
+                        "Ulasan: %{customdata[0]:,.0f}"
+                        "<extra></extra>"
+                    )
+                ))
+
+                fig6.update_layout(
+                    xaxis_title="Rating berbobot (0–5)",
+                    yaxis_title="",
+                    showlegend=False
+                )
+                fig6.update_xaxes(
+                    range=[0, 5.15],
+                    dtick=1,
+                    showgrid=False
+                )
+
+                gaya(fig6, 430)
+                tampil(fig6, "fig6")
+
+            else:
+                st.info("Tidak ada data rating yang valid.")
 
 
 
@@ -1201,7 +1239,7 @@ with st.expander("Petunjuk Penggunaan Dashboard"):
     st.markdown("""
     1. Pilih outlet, kanal penjualan, dan rentang tanggal.
     2. Perhatikan perubahan empat KPI.
-    3. Buka kedua tab untuk melihat delapan grafik.
+    3. Pilih mode 2×2 untuk melihat empat grafik, atau mode fokus untuk memperbesar satu grafik.
     4. Baca kalimat temuan utama di atas setiap grafik.
     5. Arahkan kursor ke grafik untuk melihat rincian.
     """)

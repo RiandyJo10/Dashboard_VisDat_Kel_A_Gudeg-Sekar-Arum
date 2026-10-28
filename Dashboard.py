@@ -101,64 +101,44 @@ div[data-testid="stPlotlyChart"] {
     border-radius: 14px;
     padding: 8px;
 }
-/* Dropdown Outlet dan Kanal: satu bidang gradasi menyatu. */
-/* Reset semua lapisan anak TERLEBIH DAHULU. */
-.st-key-filter_outlet [data-baseweb="select"] *,
-.st-key-filter_kanal [data-baseweb="select"] * {
-    background-color: transparent !important;
-    background-image: none !important;
+.filter-label {
+    color: #36313B;
+    font-size: 0.875rem;
+    margin-bottom: 0.35rem;
 }
-
-/* Letakkan gradasi pada permukaan utama dropdown. */
-.st-key-filter_outlet [data-baseweb="select"],
-.st-key-filter_kanal [data-baseweb="select"] {
+/* Dropdown tanpa input ketik: tombol st.popover menggantikan selectbox. */
+/* HANYA tombol utama dua filter, bukan tombol pilihan pada menu. */
+.st-key-filter_outlet div[data-testid="stPopover"] > button,
+.st-key-filter_kanal div[data-testid="stPopover"] > button,
+.st-key-filter_outlet div[data-testid="stPopover"] > div > button,
+.st-key-filter_kanal div[data-testid="stPopover"] > div > button {
+    width: 100% !important;
+    min-height: 42px !important;
+    justify-content: space-between !important;
     background: linear-gradient(110deg, #5B392B, #A9673F) !important;
+    background-color: #5B392B !important;
+    color: #FFFFFF !important;
     border: 1px solid #A9673F !important;
     border-radius: 10px !important;
-    overflow: hidden !important;
-    min-height: 42px !important;
-}
-
-/* Lapisan combobox diberi gradasi pula untuk versi Streamlit
-   yang meletakkan bidang pilihan langsung di elemen combobox. */
-.st-key-filter_outlet [role="combobox"],
-.st-key-filter_kanal [role="combobox"] {
-    background: linear-gradient(110deg, #5B392B, #A9673F) !important;
-    border: 0 !important;
-    border-radius: 10px !important;
-    min-height: 42px !important;
-}
-
-/* Khusus tombol V: jangan gunakan latar putih/abu-abu. */
-.st-key-filter_outlet button[aria-label="Open"],
-.st-key-filter_kanal button[aria-label="Open"],
-.st-key-filter_outlet button[aria-label="Close"],
-.st-key-filter_kanal button[aria-label="Close"] {
-    background: transparent !important;
-    border: 0 !important;
     box-shadow: none !important;
+    text-align: left !important;
 }
-
-/* Warna teks pilihan dan tanda panah. */
-.st-key-filter_outlet [data-baseweb="select"] input,
-.st-key-filter_kanal [data-baseweb="select"] input,
-.st-key-filter_outlet [data-baseweb="select"] span,
-.st-key-filter_kanal [data-baseweb="select"] span {
+/* Penjagaan tambahan apabila wrapper popover berbeda antarrilis. */
+.st-key-filter_outlet [data-testid="stPopover"] button[kind="secondary"],
+.st-key-filter_kanal [data-testid="stPopover"] button[kind="secondary"] {
+    background: linear-gradient(110deg, #5B392B, #A9673F) !important;
+    color: #FFFFFF !important;
+    border-color: #A9673F !important;
+}
+.st-key-filter_outlet [data-testid="stPopover"] > button *,
+.st-key-filter_kanal [data-testid="stPopover"] > button * {
     color: #FFFFFF !important;
     -webkit-text-fill-color: #FFFFFF !important;
-}
-.st-key-filter_outlet [data-baseweb="select"] svg,
-.st-key-filter_kanal [data-baseweb="select"] svg {
-    color: #FFFFFF !important;
     stroke: #FFFFFF !important;
 }
-
-/* Jangan membuka papan ketik saat area input diklik.
-   Selectbox bawaan Streamlit tetap mendukung pencarian keyboard. */
-.st-key-filter_outlet [data-baseweb="select"] input,
-.st-key-filter_kanal [data-baseweb="select"] input {
-    pointer-events: none !important;
-    caret-color: transparent !important;
+.st-key-filter_outlet [data-testid="stPopover"] > button:hover,
+.st-key-filter_kanal [data-testid="stPopover"] > button:hover {
+    background: linear-gradient(110deg, #684331, #B27B51) !important;
 }
 /* Rentang tanggal: pertahankan penampilan yang sudah berhasil. */
 .st-key-filter_tanggal [data-baseweb="input"],
@@ -354,23 +334,34 @@ st.subheader("Filter Data Penjualan")
 
 f1, f2, f3 = st.columns(3)
 
+# Popover + tombol pilihan: benar-benar tanpa kolom ketik/search.
+# Tidak mengubah logika filter yang digunakan oleh KPI dan grafik.
+opsi_outlet = ["Semua Outlet"] + sorted(df["Outlet"].unique().tolist())
+opsi_kanal = ["Semua Kanal"] + sorted(df["Kanal_Penjualan"].unique().tolist())
+if st.session_state.get("pilihan_outlet_menu") not in opsi_outlet:
+    st.session_state["pilihan_outlet_menu"] = "Semua Outlet"
+if st.session_state.get("pilihan_kanal_menu") not in opsi_kanal:
+    st.session_state["pilihan_kanal_menu"] = "Semua Kanal"
+
 with f1:
-    pilihan_outlet = st.selectbox(
-        "Outlet",
-        ["Semua Outlet"] + sorted(
-            df["Outlet"].unique().tolist()
-        ),
-        key="filter_outlet"
-    )
+    st.markdown('<div class="filter-label">Outlet</div>', unsafe_allow_html=True)
+    with st.container(key="filter_outlet"):
+        with st.popover(f"{st.session_state['pilihan_outlet_menu']}   ▾", use_container_width=True):
+            for i, nama in enumerate(opsi_outlet):
+                if st.button(nama, key=f"pilih_outlet_{i}", use_container_width=True):
+                    st.session_state["pilihan_outlet_menu"] = nama
+                    st.rerun()
+    pilihan_outlet = st.session_state["pilihan_outlet_menu"]
 
 with f2:
-    pilihan_kanal = st.selectbox(
-        "Kanal Penjualan",
-        ["Semua Kanal"] + sorted(
-            df["Kanal_Penjualan"].unique().tolist()
-        ),
-        key="filter_kanal"
-    )
+    st.markdown('<div class="filter-label">Kanal Penjualan</div>', unsafe_allow_html=True)
+    with st.container(key="filter_kanal"):
+        with st.popover(f"{st.session_state['pilihan_kanal_menu']}   ▾", use_container_width=True):
+            for i, nama in enumerate(opsi_kanal):
+                if st.button(nama, key=f"pilih_kanal_{i}", use_container_width=True):
+                    st.session_state["pilihan_kanal_menu"] = nama
+                    st.rerun()
+    pilihan_kanal = st.session_state["pilihan_kanal_menu"]
 
 with f3:
     pilihan_tanggal = st.date_input(

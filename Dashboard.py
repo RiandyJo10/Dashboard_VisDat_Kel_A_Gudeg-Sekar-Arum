@@ -101,77 +101,64 @@ div[data-testid="stPlotlyChart"] {
     border-radius: 14px;
     padding: 8px;
 }
-/* FILTER GUDeg: tiga widget saja; tanpa memengaruhi grafik/expander */
-/* Gradasi ditempatkan pada kontainer interaktif TERLUAR. */
+/* FILTER: satu warna cokelat konsisten pada seluruh permukaan widget.
+   Menghindari lapisan transparan yang sebelumnya menampilkan abu-abu. */
 .st-key-filter_outlet [data-baseweb="select"],
-.st-key-filter_kanal [data-baseweb="select"],
-.st-key-filter_tanggal [data-baseweb="input"],
-.st-key-filter_tanggal [data-baseweb="base-input"] {
-    background: linear-gradient(110deg, #5B392B, #A9673F) !important;
-    border-radius: 11px !important;
-    border-color: #A9673F !important;
-}
-/* Hindari potongan abu-abu pada area panah dan lapisan bagian dalam. */
 .st-key-filter_outlet [data-baseweb="select"] div,
+.st-key-filter_kanal [data-baseweb="select"],
 .st-key-filter_kanal [data-baseweb="select"] div,
+.st-key-filter_tanggal [data-baseweb="input"],
 .st-key-filter_tanggal [data-baseweb="input"] div,
-.st-key-filter_tanggal [data-baseweb="base-input"] div {
-    background: transparent !important;
+.st-key-filter_tanggal [data-baseweb="base-input"],
+.st-key-filter_tanggal [data-baseweb="base-input"] div,
+.st-key-filter_tanggal [data-testid="stDateInputField"],
+.st-key-filter_tanggal [data-testid="stDateInputField"] div,
+.st-key-filter_tanggal [data-testid="stDateInputField"] input {
+    background: #784F39 !important;
     background-image: none !important;
 }
-/* Kotak penampung utama juga berwarna cokelat agar tak ada ujung abu-abu. */
+
+/* Kotak luar, sudut bulat dan tanpa sambungan abu-abu di sisi panah. */
 .st-key-filter_outlet [data-baseweb="select"] > div,
 .st-key-filter_kanal [data-baseweb="select"] > div,
-.st-key-filter_tanggal [data-baseweb="input"] > div,
-.st-key-filter_tanggal [data-baseweb="base-input"] > div {
-    background: linear-gradient(110deg, #5B392B, #A9673F) !important;
-    border-radius: 11px !important;
+.st-key-filter_tanggal [data-baseweb="input"],
+.st-key-filter_tanggal [data-baseweb="base-input"] {
     border: 1px solid #A9673F !important;
+    border-radius: 11px !important;
     min-height: 43px !important;
+    overflow: hidden !important;
 }
-/* Tulisan dipertahankan putih. */
+
+/* Kontras: teks, tanggal, dan ikon tetap terlihat di atas cokelat. */
 .st-key-filter_outlet [data-baseweb="select"] *,
 .st-key-filter_kanal [data-baseweb="select"] *,
-.st-key-filter_tanggal input,
+.st-key-filter_tanggal [data-baseweb="input"] *,
+.st-key-filter_tanggal [data-baseweb="base-input"] *,
 .st-key-filter_tanggal [data-testid="stDateInputField"] * {
     color: #FFFFFF !important;
     -webkit-text-fill-color: #FFFFFF !important;
 }
-/* Panah dropdown: tidak membentuk tombol abu-abu tersendiri. */
-.st-key-filter_outlet [data-baseweb="select"] [data-baseweb="icon"],
-.st-key-filter_kanal [data-baseweb="select"] [data-baseweb="icon"],
-.st-key-filter_outlet [data-baseweb="select"] svg,
-.st-key-filter_kanal [data-baseweb="select"] svg,
+.st-key-filter_outlet svg,
+.st-key-filter_kanal svg,
 .st-key-filter_tanggal svg {
-    color: #FFF7EF !important;
-    fill: none !important;
-    stroke: #FFF7EF !important;
+    color: #FFFFFF !important;
+    stroke: #FFFFFF !important;
 }
-/* Tampilan tanggal: input bersih, angka konsisten, ikon kalender tidak sempit. */
 .st-key-filter_tanggal input {
-    background: transparent !important;
-    border: 0 !important;
-    box-shadow: none !important;
+    background: #784F39 !important;
     font-weight: 600 !important;
     font-variant-numeric: tabular-nums;
-    letter-spacing: 0.015em;
     caret-color: #FFFFFF !important;
 }
 .st-key-filter_tanggal button,
 .st-key-filter_tanggal [role="button"] {
-    background: transparent !important;
-    border: 0 !important;
+    background: #784F39 !important;
     color: #FFFFFF !important;
 }
-.st-key-filter_tanggal [data-testid="stDateInputField"] {
-    background: transparent !important;
-    border-radius: 10px !important;
-}
-/* Fokus lembut dengan tema cokelat, bukan border merah menyala. */
 .st-key-filter_outlet [data-baseweb="select"]:focus-within,
 .st-key-filter_kanal [data-baseweb="select"]:focus-within,
 .st-key-filter_tanggal [data-baseweb="input"]:focus-within {
-    box-shadow: 0 0 0 2px rgba(196, 122, 66, 0.24) !important;
+    box-shadow: 0 0 0 2px rgba(196, 122, 66, .25) !important;
 }
 /* Petunjuk penggunaan: jaga kontras saat dibuka */
 div[data-testid="stExpander"] details,

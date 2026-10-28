@@ -158,22 +158,6 @@ div[data-testid="stExpander"] details * {
     color: #3D241C !important;
     -webkit-text-fill-color: #3D241C !important;
 }
-/* Hilangkan warna putih pada tombol panah dropdown */
-.st-key-filter_outlet button[aria-label="Open"],
-.st-key-filter_kanal button[aria-label="Open"] {
-    background: transparent !important;
-    background-color: linear-gradient(110deg, #5B392B, #A9673F) !important;
-    background-image: none !important;
-    border: none !important;
-    box-shadow: none !important;
-}
-
-/* Warna ikon panah tetap putih */
-.st-key-filter_outlet button[aria-label="Open"] svg,
-.st-key-filter_kanal button[aria-label="Open"] svg {
-    color: white !important;
-    stroke: white !important;
-}
 </style>
 """, unsafe_allow_html=True)
 

@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -101,12 +100,41 @@ div[data-testid="stPlotlyChart"] {
     border-radius: 14px;
     padding: 8px;
 }
-/* FILTER: satu warna cokelat konsisten pada seluruh permukaan widget.
-   Menghindari lapisan transparan yang sebelumnya menampilkan abu-abu. */
-.st-key-filter_outlet [data-baseweb="select"],
-.st-key-filter_outlet [data-baseweb="select"] div,
-.st-key-filter_kanal [data-baseweb="select"],
-.st-key-filter_kanal [data-baseweb="select"] div,
+/* OUTLET & KANAL: dropdown Streamlit menggunakan role="combobox".
+   Target langsung permukaan combobox, bukan hanya data-baseweb="select". */
+.st-key-filter_outlet [role="combobox"],
+.st-key-filter_kanal [role="combobox"],
+.st-key-filter_outlet [role="combobox"] div,
+.st-key-filter_kanal [role="combobox"] div,
+.st-key-filter_outlet [data-baseweb="select"] > div,
+.st-key-filter_kanal [data-baseweb="select"] > div {
+    background-color: #784F39 !important;
+    background-image: none !important;
+}
+.st-key-filter_outlet [role="combobox"],
+.st-key-filter_kanal [role="combobox"] {
+    border: 1px solid #A9673F !important;
+    border-radius: 11px !important;
+    min-height: 43px !important;
+    overflow: hidden !important;
+}
+.st-key-filter_outlet [role="combobox"] *,
+.st-key-filter_kanal [role="combobox"] * {
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+}
+.st-key-filter_outlet [role="combobox"] svg,
+.st-key-filter_kanal [role="combobox"] svg {
+    color: #FFFFFF !important;
+    fill: none !important;
+    stroke: #FFFFFF !important;
+}
+.st-key-filter_outlet [role="combobox"]:focus-within,
+.st-key-filter_kanal [role="combobox"]:focus-within {
+    box-shadow: 0 0 0 2px rgba(196, 122, 66, 0.25) !important;
+}
+
+/* TANGGAL: bagian ini sudah berhasil, dipertahankan. */
 .st-key-filter_tanggal [data-baseweb="input"],
 .st-key-filter_tanggal [data-baseweb="input"] div,
 .st-key-filter_tanggal [data-baseweb="base-input"],
@@ -117,10 +145,6 @@ div[data-testid="stPlotlyChart"] {
     background: #784F39 !important;
     background-image: none !important;
 }
-
-/* Kotak luar, sudut bulat dan tanpa sambungan abu-abu di sisi panah. */
-.st-key-filter_outlet [data-baseweb="select"] > div,
-.st-key-filter_kanal [data-baseweb="select"] > div,
 .st-key-filter_tanggal [data-baseweb="input"],
 .st-key-filter_tanggal [data-baseweb="base-input"] {
     border: 1px solid #A9673F !important;
@@ -128,18 +152,12 @@ div[data-testid="stPlotlyChart"] {
     min-height: 43px !important;
     overflow: hidden !important;
 }
-
-/* Kontras: teks, tanggal, dan ikon tetap terlihat di atas cokelat. */
-.st-key-filter_outlet [data-baseweb="select"] *,
-.st-key-filter_kanal [data-baseweb="select"] *,
 .st-key-filter_tanggal [data-baseweb="input"] *,
 .st-key-filter_tanggal [data-baseweb="base-input"] *,
 .st-key-filter_tanggal [data-testid="stDateInputField"] * {
     color: #FFFFFF !important;
     -webkit-text-fill-color: #FFFFFF !important;
 }
-.st-key-filter_outlet svg,
-.st-key-filter_kanal svg,
 .st-key-filter_tanggal svg {
     color: #FFFFFF !important;
     stroke: #FFFFFF !important;
@@ -155,8 +173,6 @@ div[data-testid="stPlotlyChart"] {
     background: #784F39 !important;
     color: #FFFFFF !important;
 }
-.st-key-filter_outlet [data-baseweb="select"]:focus-within,
-.st-key-filter_kanal [data-baseweb="select"]:focus-within,
 .st-key-filter_tanggal [data-baseweb="input"]:focus-within {
     box-shadow: 0 0 0 2px rgba(196, 122, 66, .25) !important;
 }

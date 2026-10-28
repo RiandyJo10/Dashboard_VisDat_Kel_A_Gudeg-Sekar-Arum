@@ -162,7 +162,7 @@ div[data-testid="stExpander"] details * {
 .st-key-filter_outlet button[aria-label="Open"],
 .st-key-filter_kanal button[aria-label="Open"] {
     background: transparent !important;
-    background-color: transparent !important;
+    background-color: linear-gradient(110deg, #5B392B, #A9673F) !important;
     background-image: none !important;
     border: none !important;
     box-shadow: none !important;

@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -106,8 +105,7 @@ div[data-testid="stPlotlyChart"] {
     font-size: 0.875rem;
     margin-bottom: 0.35rem;
 }
-/* Dropdown tanpa input ketik: tombol st.popover menggantikan selectbox. */
-/* HANYA tombol utama dua filter, bukan tombol pilihan pada menu. */
+
 .st-key-filter_outlet div[data-testid="stPopover"] > button,
 .st-key-filter_kanal div[data-testid="stPopover"] > button,
 .st-key-filter_outlet div[data-testid="stPopover"] > div > button,
@@ -123,7 +121,7 @@ div[data-testid="stPlotlyChart"] {
     box-shadow: none !important;
     text-align: left !important;
 }
-/* Penjagaan tambahan apabila wrapper popover berbeda antarrilis. */
+
 .st-key-filter_outlet [data-testid="stPopover"] button[kind="secondary"],
 .st-key-filter_kanal [data-testid="stPopover"] button[kind="secondary"] {
     background: linear-gradient(110deg, #5B392B, #A9673F) !important;
@@ -140,7 +138,7 @@ div[data-testid="stPlotlyChart"] {
 .st-key-filter_kanal [data-testid="stPopover"] > button:hover {
     background: linear-gradient(110deg, #684331, #B27B51) !important;
 }
-/* Hanya ikon panah bawaan Streamlit; geser ke ujung kanan. */
+
 .st-key-filter_outlet [data-testid="stPopover"] > button,
 .st-key-filter_kanal [data-testid="stPopover"] > button {
     display: flex !important;
@@ -158,7 +156,7 @@ div[data-testid="stPlotlyChart"] {
     flex: 1 1 auto !important;
     text-align: left !important;
 }
-/* Rentang tanggal: pertahankan penampilan yang sudah berhasil. */
+
 .st-key-filter_tanggal [data-baseweb="input"],
 .st-key-filter_tanggal [data-baseweb="base-input"],
 .st-key-filter_tanggal [data-baseweb="input"] > div,
@@ -187,7 +185,7 @@ div[data-testid="stPlotlyChart"] {
     color: white !important;
     stroke: white !important;
 }
-/* Petunjuk penggunaan: jaga kontras saat dibuka */
+
 div[data-testid="stExpander"] details,
 div[data-testid="stExpander"] details summary,
 div[data-testid="stExpander"] details > div {

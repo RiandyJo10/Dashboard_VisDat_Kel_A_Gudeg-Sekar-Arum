@@ -101,51 +101,86 @@ div[data-testid="stPlotlyChart"] {
     border-radius: 14px;
     padding: 8px;
 }
-/* Filter cokelat - hanya tiga widget, tidak menyentuh expander */
+/* FILTER OUTLET & KANAL: satu latar gradasi termasuk area panah. */
+/* Arahkan gradasi ke pembungkus dropdown, bukan hanya nilai pilihannya. */
 .st-key-filter_outlet [data-baseweb="select"],
-.st-key-filter_kanal [data-baseweb="select"],
-.st-key-filter_outlet [data-baseweb="select"] > div,
-.st-key-filter_kanal [data-baseweb="select"] > div,
-.st-key-filter_outlet [role="combobox"],
-.st-key-filter_kanal [role="combobox"],
+.st-key-filter_kanal [data-baseweb="select"] {
+    background: linear-gradient(110deg, #5B392B, #A9673F) !important;
+    border: 1px solid #A9673F !important;
+    border-radius: 10px !important;
+    min-height: 42px !important;
+    overflow: hidden !important;
+}
+/* Semua lapisan internal transparan agar warna kotak utama tidak tertutup. */
+.st-key-filter_outlet [data-baseweb="select"] div,
+.st-key-filter_kanal [data-baseweb="select"] div,
+.st-key-filter_outlet [data-baseweb="select"] [role="combobox"],
+.st-key-filter_kanal [data-baseweb="select"] [role="combobox"] {
+    background: transparent !important;
+    background-image: none !important;
+    border-color: transparent !important;
+}
+/* Tombol panah adalah BUTTON tersendiri (terlihat dari Inspect). */
+/* Beri gradasi cokelat secara eksplisit supaya ujung kanan tak pernah putih. */
+.st-key-filter_outlet [data-baseweb="select"] button,
+.st-key-filter_kanal [data-baseweb="select"] button,
+.st-key-filter_outlet button[aria-label="Open"],
+.st-key-filter_kanal button[aria-label="Open"] {
+    background: linear-gradient(110deg, #956044, #A9673F) !important;
+    background-color: #A9673F !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+}
+.st-key-filter_outlet [data-baseweb="select"] button::before,
+.st-key-filter_outlet [data-baseweb="select"] button::after,
+.st-key-filter_kanal [data-baseweb="select"] button::before,
+.st-key-filter_kanal [data-baseweb="select"] button::after {
+    background: transparent !important;
+}
+/* Nilai terpilih dan tanda V tetap putih; hanya lingkup kedua selectbox. */
+.st-key-filter_outlet [data-baseweb="select"] span,
+.st-key-filter_kanal [data-baseweb="select"] span,
+.st-key-filter_outlet [data-baseweb="select"] input,
+.st-key-filter_kanal [data-baseweb="select"] input {
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+}
+.st-key-filter_outlet [data-baseweb="select"] svg,
+.st-key-filter_kanal [data-baseweb="select"] svg {
+    color: #FFFFFF !important;
+    stroke: #FFFFFF !important;
+}
+/* TANGGAL: pertahankan aturan terpisah yang sebelumnya sudah sesuai. */
 .st-key-filter_tanggal [data-baseweb="input"],
 .st-key-filter_tanggal [data-baseweb="base-input"],
 .st-key-filter_tanggal [data-baseweb="input"] > div,
 .st-key-filter_tanggal [data-baseweb="base-input"] > div,
 .st-key-filter_tanggal [data-testid="stDateInputField"],
 .st-key-filter_tanggal input {
-    background-color: #5B392B !important;
-    background-image: linear-gradient(110deg, #5B392B, #A9673F) !important;
+    background: linear-gradient(110deg, #5B392B, #A9673F) !important;
     color: #FFFFFF !important;
     border-color: #A9673F !important;
 }
-/* Lapisan di dalam kontrol tidak boleh menutup gradasi */
-.st-key-filter_outlet [data-baseweb="select"] > div > div,
-.st-key-filter_kanal [data-baseweb="select"] > div > div,
 .st-key-filter_tanggal [data-baseweb="input"] > div > div,
 .st-key-filter_tanggal [data-baseweb="base-input"] > div > div {
     background-color: transparent !important;
 }
-.st-key-filter_outlet [role="combobox"],
-.st-key-filter_kanal [role="combobox"],
 .st-key-filter_tanggal [data-baseweb="input"],
 .st-key-filter_tanggal [data-baseweb="base-input"] {
     border-radius: 10px !important;
     min-height: 42px;
 }
-/* Batasi warna teks dan ikon hanya di tiga filter */
-.st-key-filter_outlet [data-baseweb="select"] *,
-.st-key-filter_kanal [data-baseweb="select"] *,
 .st-key-filter_tanggal input,
 .st-key-filter_tanggal [data-testid="stDateInputField"] * {
-    color: white !important;
-    -webkit-text-fill-color: white !important;
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
 }
-.st-key-filter_outlet svg,
-.st-key-filter_kanal svg,
 .st-key-filter_tanggal svg {
-    color: white !important;
-    stroke: white !important;
+    color: #FFFFFF !important;
+    stroke: #FFFFFF !important;
 }
 /* Petunjuk penggunaan: jaga kontras saat dibuka */
 div[data-testid="stExpander"] details,

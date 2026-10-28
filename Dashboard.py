@@ -128,17 +128,19 @@ div[data-testid="stPlotlyChart"] {
     color: #FFFFFF !important;
     border-color: #A9673F !important;
 }
+
 .st-key-filter_outlet [data-testid="stPopover"] > button *,
 .st-key-filter_kanal [data-testid="stPopover"] > button * {
     color: #FFFFFF !important;
     -webkit-text-fill-color: #FFFFFF !important;
     stroke: #FFFFFF !important;
 }
+
 .st-key-filter_outlet [data-testid="stPopover"] > button:hover,
 .st-key-filter_kanal [data-testid="stPopover"] > button:hover {
     background: linear-gradient(110deg, #684331, #B27B51) !important;
 }
-/* Hanya ikon panah bawaan Streamlit; geser ke ujung kanan. */
+
 .st-key-filter_outlet [data-testid="stPopover"] > button,
 .st-key-filter_kanal [data-testid="stPopover"] > button {
     display: flex !important;
@@ -146,11 +148,13 @@ div[data-testid="stPlotlyChart"] {
     justify-content: flex-start !important;
     gap: 10px !important;
 }
+
 .st-key-filter_outlet [data-testid="stPopover"] > button svg,
 .st-key-filter_kanal [data-testid="stPopover"] > button svg {
     margin-left: auto !important;
     flex-shrink: 0 !important;
 }
+
 .st-key-filter_outlet [data-testid="stPopover"] > button [data-testid="stMarkdownContainer"],
 .st-key-filter_kanal [data-testid="stPopover"] > button [data-testid="stMarkdownContainer"] {
     flex: 1 1 auto !important;
@@ -167,20 +171,24 @@ div[data-testid="stPlotlyChart"] {
     color: #FFFFFF !important;
     border-color: #A9673F !important;
 }
+
 .st-key-filter_tanggal [data-baseweb="input"] > div > div,
 .st-key-filter_tanggal [data-baseweb="base-input"] > div > div {
     background-color: transparent !important;
 }
+
 .st-key-filter_tanggal [data-baseweb="input"],
 .st-key-filter_tanggal [data-baseweb="base-input"] {
     border-radius: 10px !important;
     min-height: 42px;
 }
+
 .st-key-filter_tanggal input,
 .st-key-filter_tanggal [data-testid="stDateInputField"] * {
     color: white !important;
     -webkit-text-fill-color: white !important;
 }
+
 .st-key-filter_tanggal svg {
     color: white !important;
     stroke: white !important;
@@ -192,12 +200,12 @@ div[data-testid="stExpander"] details > div {
     background-color: #FFFCF8 !important;
     color: #3D241C !important;
 }
+
 div[data-testid="stExpander"] details * {
     color: #3D241C !important;
     -webkit-text-fill-color: #3D241C !important;
 }
 
-/* Layout 2x2 rapi: ruang antar-komponen dijaga agar tidak bertabrakan. */
 .block-container {
     max-width: 1450px;
     padding-top: 1.5rem !important;
@@ -208,6 +216,7 @@ div[data-testid="stExpander"] details * {
     margin-bottom: 18px !important;
     border-radius: 14px !important;
 }
+
 .header h1 {font-size: 1.65rem !important; line-height: 1.35 !important;}
 .header p {font-size: .89rem !important; margin-top: 8px !important;}
 .kpi {min-height: 110px !important; padding: 14px !important;}
@@ -221,6 +230,7 @@ div[data-testid="stExpander"] details * {
     line-height: 1.55 !important;
     overflow-wrap: anywhere;
 }
+
 .filter-label {font-size: .86rem !important; margin-bottom: .35rem !important;}
 .st-key-filter_outlet [data-testid="stPopover"] > button,
 .st-key-filter_kanal [data-testid="stPopover"] > button {min-height: 42px !important;}
@@ -245,6 +255,7 @@ div[data-testid="stPlotlyChart"] {
     width: max-content !important;
     max-width: 100% !important;
 }
+
 .st-key-aksi_fig1a button, .st-key-aksi_fig1b button,
 .st-key-aksi_fig3 button, .st-key-aksi_fig5a button,
 .st-key-aksi_fig2 button, .st-key-aksi_fig4 button,
@@ -260,12 +271,14 @@ div[data-testid="stPlotlyChart"] {
     background: #FFF9F1 !important;
     box-shadow: none !important;
 }
+
 .st-key-aksi_fig1a button:hover, .st-key-aksi_fig1b button:hover,
 .st-key-aksi_fig3 button:hover, .st-key-aksi_fig5a button:hover,
 .st-key-aksi_fig2 button:hover, .st-key-aksi_fig4 button:hover,
 .st-key-aksi_fig5b button:hover, .st-key-aksi_fig6 button:hover {
     background: #F3E9DF !important;
 }
+
 .st-key-aksi_fig1a button p, .st-key-aksi_fig1b button p,
 .st-key-aksi_fig3 button p, .st-key-aksi_fig5a button p,
 .st-key-aksi_fig2 button p, .st-key-aksi_fig4 button p,
@@ -273,7 +286,6 @@ div[data-testid="stPlotlyChart"] {
     font-size: 0.72rem !important;
     margin: 0 !important;
 }
-
 
 .judul-grafik {
     font-size: 1.04rem;
@@ -283,6 +295,7 @@ div[data-testid="stPlotlyChart"] {
     padding: 0;
     margin: 0;
 }
+
 .st-key-aksi_fig1a, .st-key-aksi_fig1b, .st-key-aksi_fig3,
 .st-key-aksi_fig5a, .st-key-aksi_fig2, .st-key-aksi_fig4,
 .st-key-aksi_fig5b, .st-key-aksi_fig6 {
@@ -290,6 +303,7 @@ div[data-testid="stPlotlyChart"] {
     margin-bottom: 0 !important;
     width: 100% !important;
 }
+
 .st-key-aksi_fig1a button, .st-key-aksi_fig1b button,
 .st-key-aksi_fig3 button, .st-key-aksi_fig5a button,
 .st-key-aksi_fig2 button, .st-key-aksi_fig4 button,
@@ -299,21 +313,17 @@ div[data-testid="stPlotlyChart"] {
     min-height: 26px !important;
     height: 26px !important;
     padding: 2px 5px !important;
-    /* Turunkan tombol sedikit agar sejajar dengan teks judul grafik. */
     transform: translateY(10px) !important;
 }
 
 </style>
 """, unsafe_allow_html=True)
 
-
 def angka(nilai):
     return f"{nilai:,.0f}".replace(",", ".")
 
-
 def rupiah(nilai):
     return f"Rp {angka(nilai)}"
-
 
 def ringkas(nilai):
     if abs(nilai) >= 1_000_000_000:
@@ -324,14 +334,11 @@ def ringkas(nilai):
         return "Rp " + hasil.replace(".", ",") + " Jt"
     return rupiah(nilai)
 
-
 def persen(nilai):
     return f"{nilai:.2f}".replace(".", ",") + "%"
 
-
 def skor(nilai):
     return f"{nilai:.2f}".replace(".", ",")
-
 
 def bersihkan_angka(series, minus_nol=False):
     teks = (
@@ -345,7 +352,6 @@ def bersihkan_angka(series, minus_nol=False):
         teks = teks.replace({"-": "0"})
     return pd.to_numeric(teks, errors="coerce")
 
-
 def kartu(label, nilai, catatan):
     st.markdown(
         f"""
@@ -358,13 +364,11 @@ def kartu(label, nilai, catatan):
         unsafe_allow_html=True
     )
 
-
 def insight(teks):
     st.markdown(
         f'<div class="insight">{escape(teks)}</div>',
         unsafe_allow_html=True
     )
-
 
 def gaya(fig, tinggi=440):
     fig.update_layout(
@@ -378,7 +382,6 @@ def gaya(fig, tinggi=440):
     )
     return fig
 
-
 def tampil(fig, key):
     st.plotly_chart(
         fig,
@@ -386,8 +389,6 @@ def tampil(fig, key):
         key=key,
         config={"displaylogo": False}
     )
-
-
 
 lokasi_file = (
     Path(__file__).parent
@@ -444,7 +445,6 @@ if gagal:
     st.write(gagal)
     st.stop()
 
-
 st.markdown("""
 <div class="header">
     <h1>Gudeg Sekar Arum</h1>
@@ -457,8 +457,6 @@ st.subheader("Filter Data Penjualan")
 
 f1, f2, f3 = st.columns(3)
 
-# Popover + tombol pilihan: benar-benar tanpa kolom ketik/search.
-# Tidak mengubah logika filter yang digunakan oleh KPI dan grafik.
 opsi_outlet = ["Semua Outlet"] + sorted(df["Outlet"].unique().tolist())
 opsi_kanal = ["Semua Kanal"] + sorted(df["Kanal_Penjualan"].unique().tolist())
 if st.session_state.get("pilihan_outlet_menu") not in opsi_outlet:
@@ -534,7 +532,6 @@ st.caption(
     f"{angka(len(data))} dari {angka(len(df))} baris."
 )
 
-
 total_omzet = data["Omzet_Bersih_Rp"].sum()
 total_transaksi = data["Jumlah_Transaksi"].sum()
 
@@ -593,9 +590,6 @@ with k4:
         "Rata-rata berbobot jumlah ulasan"
     )
 
-
-
-
 outlet = (
     data.groupby("Outlet")["Omzet_Bersih_Rp"]
     .sum()
@@ -640,9 +634,6 @@ bulanan = bulanan[
     )
 ].copy()
 
-
-# Setiap kartu grafik memiliki tombol perbesar sendiri.
-# Fokus disimpan terpisah untuk dua tab agar pilihan tidak saling mengganggu.
 if "fokus_bisnis" not in st.session_state:
     st.session_state.fokus_bisnis = None
 if "fokus_mendalam" not in st.session_state:
@@ -740,8 +731,6 @@ with tab1:
             gaya(fig1a)
             tampil(fig1a, "fig1a")
 
-
-
     if mode_grafik == "Semua grafik (2×2)" or pilihan_bisnis == "fig1b":
         with kanan_atas:
             judul_dan_tombol("Perbandingan Omzet Kanal Penjualan", "fokus_bisnis", "fig1b")
@@ -809,8 +798,6 @@ with tab1:
 
             gaya(fig1b)
             tampil(fig1b, "fig1b")
-
-
 
     kiri_bawah, kanan_bawah = (st.columns(2, gap="medium")
                                 if mode_grafik == "Semua grafik (2×2)"
@@ -898,8 +885,6 @@ with tab1:
             else:
                 st.info("Tidak ada omzet produk pada filter ini.")
 
-
-
     if mode_grafik == "Semua grafik (2×2)" or pilihan_bisnis == "fig5a":
         with kanan_bawah:
             judul_dan_tombol("Tren Omzet Bersih Bulanan", "fokus_bisnis", "fig5a")
@@ -977,7 +962,6 @@ with tab1:
             gaya(fig5a)
             tampil(fig5a, "fig5a")
 
-
 with tab2:
     pilihan_mendalam = st.session_state.fokus_mendalam
     mode_grafik = "Semua grafik (2×2)" if pilihan_mendalam is None else "Fokus satu grafik"
@@ -1031,8 +1015,6 @@ with tab2:
             )
             gaya(fig2, 480)
             tampil(fig2, "fig2")
-
-
 
     if mode_grafik == "Semua grafik (2×2)" or pilihan_mendalam == "fig4":
         with kanan_atas:
@@ -1112,8 +1094,6 @@ with tab2:
             gaya(fig4, 490)
             tampil(fig4, "fig4")
 
-
-
     kiri_bawah, kanan_bawah = (st.columns(2, gap="medium")
                                 if mode_grafik == "Semua grafik (2×2)"
                                 else (st.container(), st.container()))
@@ -1124,8 +1104,6 @@ with tab2:
             ma = harian.copy()
             ma["Juta"] = ma["Omzet_Bersih_Rp"] / 1e6
 
-            # Reindex ke tanggal kalender agar jendela
-            # benar-benar mewakili tujuh hari.
             kalender = pd.date_range(
                 start=awal,
                 end=akhir,
@@ -1217,8 +1195,6 @@ with tab2:
             gaya(fig5b, 490)
             tampil(fig5b, "fig5b")
 
-
-
     if mode_grafik == "Semua grafik (2×2)" or pilihan_mendalam == "fig6":
         with kanan_bawah:
             judul_dan_tombol("Rating Pelanggan per Outlet", "fokus_mendalam", "fig6")
@@ -1301,10 +1277,6 @@ with tab2:
 
             else:
                 st.info("Tidak ada data rating yang valid.")
-
-
-
-
 
 with st.expander("Petunjuk Penggunaan Dashboard"):
     st.markdown("""

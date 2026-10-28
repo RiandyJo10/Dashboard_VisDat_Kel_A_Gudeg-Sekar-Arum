@@ -1,3 +1,4 @@
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -100,52 +101,33 @@ div[data-testid="stPlotlyChart"] {
     border-radius: 14px;
     padding: 8px;
 }
-/* Filter: selectbox dan rentang tanggal */
-[data-testid="stSelectbox"] [data-baseweb="select"] > div,
-[data-testid="stSelectbox"] [data-baseweb="select"],
-[data-testid="stDateInput"] [data-baseweb="input"],
-[data-testid="stDateInput"] [data-baseweb="base-input"],
-[data-testid="stDateInputField"] [data-baseweb="input"],
-[data-testid="stDateInputField"] [data-baseweb="base-input"] {
+div[data-testid="stSelectbox"] div[data-baseweb="select"] > div,
+div[data-testid="stDateInput"] div[data-baseweb="input"] {
     background: linear-gradient(110deg, #5B392B, #A9673F) !important;
-    background-color: #5B392B !important;
     border: 1px solid #A9673F !important;
     border-radius: 12px !important;
     color: #FFFFFF !important;
     min-height: 46px;
 }
-/* Lapisan input tidak boleh menutupi gradasi */
-[data-testid="stSelectbox"] [data-baseweb="select"] > div > div,
-[data-testid="stDateInput"] [data-baseweb="input"] > div,
-[data-testid="stDateInput"] [data-baseweb="base-input"] > div,
-[data-testid="stDateInputField"] [data-baseweb="input"] > div {
-    background: transparent !important;
-}
-/* Teks, tanggal, placeholder, ikon */
-[data-testid="stSelectbox"] [data-baseweb="select"] *,
-[data-testid="stDateInput"] [data-baseweb="input"] *,
-[data-testid="stDateInput"] [data-baseweb="base-input"] *,
-[data-testid="stDateInputField"] [data-baseweb="input"] * {
+div[data-testid="stSelectbox"] div[data-baseweb="select"] span,
+div[data-testid="stSelectbox"] div[data-baseweb="select"] input,
+div[data-testid="stDateInput"] div[data-baseweb="input"] input {
     color: #FFFFFF !important;
     -webkit-text-fill-color: #FFFFFF !important;
 }
-[data-testid="stSelectbox"] svg,
-[data-testid="stDateInput"] svg,
-[data-testid="stDateInputField"] svg {
+div[data-testid="stSelectbox"] div[data-baseweb="select"] svg,
+div[data-testid="stDateInput"] div[data-baseweb="input"] svg {
+    fill: #FFFFFF !important;
     color: #FFFFFF !important;
-    fill: none !important;
-    stroke: #FFFFFF !important;
 }
-[data-testid="stDateInput"] input,
-[data-testid="stDateInputField"] input {
-    background: transparent !important;
-    color: #FFFFFF !important;
-    -webkit-text-fill-color: #FFFFFF !important;
+div[data-testid="stSelectbox"] div[data-baseweb="select"] > div > div,
+div[data-testid="stDateInput"] div[data-baseweb="input"] > div {
+    background-color: transparent !important;
 }
-[data-testid="stSelectbox"] [data-baseweb="select"] > div:focus-within,
-[data-testid="stDateInput"] [data-baseweb="input"]:focus-within {
+div[data-testid="stSelectbox"] div[data-baseweb="select"] > div:focus-within,
+div[data-testid="stDateInput"] div[data-baseweb="input"]:focus-within {
     border-color: #E6C39D !important;
-    box-shadow: 0 0 0 2px rgba(169, 103, 63, 0.2) !important;
+    box-shadow: 0 0 0 2px rgba(169, 103, 63, .2) !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -157,6 +139,7 @@ def angka(nilai):
 
 def rupiah(nilai):
     return f"Rp {angka(nilai)}"
+
 
 def ringkas(nilai):
     if abs(nilai) >= 1_000_000_000:
@@ -187,6 +170,7 @@ def bersihkan_angka(series, minus_nol=False):
     if minus_nol:
         teks = teks.replace({"-": "0"})
     return pd.to_numeric(teks, errors="coerce")
+
 
 def kartu(label, nilai, catatan):
     st.markdown(
@@ -220,6 +204,7 @@ def gaya(fig, tinggi=440):
     )
     return fig
 
+
 def tampil(fig, key):
     st.plotly_chart(
         fig,
@@ -227,6 +212,8 @@ def tampil(fig, key):
         key=key,
         config={"displaylogo": False}
     )
+
+
 
 lokasi_file = (
     Path(__file__).parent
@@ -359,6 +346,7 @@ st.caption(
     f"{angka(len(data))} dari {angka(len(df))} baris."
 )
 
+
 total_omzet = data["Omzet_Bersih_Rp"].sum()
 total_transaksi = data["Jumlah_Transaksi"].sum()
 
@@ -490,7 +478,7 @@ with tab1:
 
     fig1a = go.Figure()
 
-persen_outlet = (
+    persen_outlet = (
         outlet / total_omzet * 100
         if total_omzet > 0 else outlet * 0
     )
@@ -844,7 +832,7 @@ with tab2:
             "andal pada pilihan data ini."
         )
 
-      fig4 = go.Figure()
+    fig4 = go.Figure()
 
     for nama in scatter["Outlet"].unique():
         bagian = scatter[
@@ -988,6 +976,7 @@ with tab2:
     gaya(fig5b, 490)
     tampil(fig5b, "fig5b")
 
+
     st.subheader("Rating Pelanggan per Outlet")
 
     if not valid.empty:
@@ -1084,5 +1073,5 @@ with st.expander("Petunjuk Penggunaan Dashboard"):
 st.caption(
     "Gudeg Sekar Arum 2025 | "
     "Sumber: Data simulasi penjualan | "
-    "Dataset: 1 Januari–31 Desember 2025 | "
+    "Dataset: 1 Januari–31 Desember 2025."
 )

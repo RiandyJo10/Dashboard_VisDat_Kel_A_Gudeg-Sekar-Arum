@@ -276,6 +276,33 @@ div[data-testid="stPlotlyChart"] {
     margin: 0 !important;
 }
 
+/* Judul dan tombol Perbesar dalam baris yang sama, pada setiap grafik. */
+.judul-grafik {
+    font-size: 1.04rem;
+    font-weight: 650;
+    line-height: 1.3;
+    color: #3D241C;
+    padding: 0;
+    margin: 0;
+}
+.st-key-aksi_fig1a, .st-key-aksi_fig1b, .st-key-aksi_fig3,
+.st-key-aksi_fig5a, .st-key-aksi_fig2, .st-key-aksi_fig4,
+.st-key-aksi_fig5b, .st-key-aksi_fig6 {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    width: 100% !important;
+}
+.st-key-aksi_fig1a button, .st-key-aksi_fig1b button,
+.st-key-aksi_fig3 button, .st-key-aksi_fig5a button,
+.st-key-aksi_fig2 button, .st-key-aksi_fig4 button,
+.st-key-aksi_fig5b button, .st-key-aksi_fig6 button {
+    white-space: nowrap !important;
+    font-size: .68rem !important;
+    min-height: 26px !important;
+    height: 26px !important;
+    padding: 2px 5px !important;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -624,15 +651,21 @@ if "fokus_mendalam" not in st.session_state:
 def ubah_fokus(nama_tab, kode_grafik):
     st.session_state[nama_tab] = kode_grafik
 
-def tombol_fokus(nama_tab, kode_grafik):
+def judul_dan_tombol(judul, nama_tab, kode_grafik):
+    """Judul dan tombol aksi pada satu baris dalam kartu grafik."""
     aktif = st.session_state[nama_tab] == kode_grafik
-    st.button(
-        "↩ Kembali ke 4 grafik" if aktif else "⛶ Perbesar",
-        key=f"aksi_{kode_grafik}",
-        on_click=ubah_fokus,
-        args=(nama_tab, None if aktif else kode_grafik),
-        help="Perbesar grafik ini" if not aktif else "Tampilkan lagi susunan 2×2",
-    )
+    kolom_judul, kolom_aksi = st.columns([4.4, 1], gap="small", vertical_alignment="center")
+    with kolom_judul:
+        st.markdown(f'<div class="judul-grafik">{escape(judul)}</div>', unsafe_allow_html=True)
+    with kolom_aksi:
+        st.button(
+            "↩ Kembali" if aktif else "⛶ Perbesar",
+            key=f"aksi_{kode_grafik}",
+            on_click=ubah_fokus,
+            args=(nama_tab, None if aktif else kode_grafik),
+            help="Kembali ke susunan empat grafik" if aktif else f"Perbesar: {judul}",
+            use_container_width=True,
+        )
 
 tab1, tab2 = st.tabs(["📊 Ringkasan Bisnis", "🔍 Analisis Mendalam"])
 
@@ -644,8 +677,7 @@ with tab1:
                               else (st.container(), st.container()))
     if mode_grafik == "Semua grafik (2×2)" or pilihan_bisnis == "fig1a":
         with kiri_atas:
-            st.subheader("Perbandingan Omzet Bersih Outlet")
-            tombol_fokus("fokus_bisnis", "fig1a")
+            judul_dan_tombol("Perbandingan Omzet Bersih Outlet", "fokus_bisnis", "fig1a")
 
             outlet_utama = outlet.idxmax()
             kontribusi_outlet = (
@@ -712,8 +744,7 @@ with tab1:
 
     if mode_grafik == "Semua grafik (2×2)" or pilihan_bisnis == "fig1b":
         with kanan_atas:
-            st.subheader("Perbandingan Omzet Kanal Penjualan")
-            tombol_fokus("fokus_bisnis", "fig1b")
+            judul_dan_tombol("Perbandingan Omzet Kanal Penjualan", "fokus_bisnis", "fig1b")
 
             kanal_utama = kanal.idxmax()
             kontribusi_kanal = (
@@ -786,8 +817,7 @@ with tab1:
                                 else (st.container(), st.container()))
     if mode_grafik == "Semua grafik (2×2)" or pilihan_bisnis == "fig3":
         with kiri_bawah:
-            st.subheader("Proporsi Omzet Produk Sebelum Diskon")
-            tombol_fokus("fokus_bisnis", "fig3")
+            judul_dan_tombol("Proporsi Omzet Produk Sebelum Diskon", "fokus_bisnis", "fig3")
 
             omzet_gudeg = data["Omzet_Gudeg_Rp"].sum()
             omzet_oleh = data["Omzet_Oleh_Oleh_Rp"].sum()
@@ -872,8 +902,7 @@ with tab1:
 
     if mode_grafik == "Semua grafik (2×2)" or pilihan_bisnis == "fig5a":
         with kanan_bawah:
-            st.subheader("Tren Omzet Bersih Bulanan")
-            tombol_fokus("fokus_bisnis", "fig5a")
+            judul_dan_tombol("Tren Omzet Bersih Bulanan", "fokus_bisnis", "fig5a")
 
             bulan_tertinggi = bulanan.loc[
                 bulanan["Omzet_Bersih_Rp"].idxmax()
@@ -957,8 +986,7 @@ with tab2:
                               else (st.container(), st.container()))
     if mode_grafik == "Semua grafik (2×2)" or pilihan_mendalam == "fig2":
         with kiri_atas:
-            st.subheader("Distribusi Omzet Harian per Outlet")
-            tombol_fokus("fokus_mendalam", "fig2")
+            judul_dan_tombol("Distribusi Omzet Harian per Outlet", "fokus_mendalam", "fig2")
 
             boxdata = harian_outlet.copy()
             boxdata["Juta"] = (
@@ -1008,8 +1036,7 @@ with tab2:
 
     if mode_grafik == "Semua grafik (2×2)" or pilihan_mendalam == "fig4":
         with kanan_atas:
-            st.subheader("Transaksi vs Omzet Bersih Harian")
-            tombol_fokus("fokus_mendalam", "fig4")
+            judul_dan_tombol("Transaksi vs Omzet Bersih Harian", "fokus_mendalam", "fig4")
 
             scatter = harian_outlet.copy()
             scatter["Juta"] = (
@@ -1092,10 +1119,7 @@ with tab2:
                                 else (st.container(), st.container()))
     if mode_grafik == "Semua grafik (2×2)" or pilihan_mendalam == "fig5b":
         with kiri_bawah:
-            st.subheader(
-                "Omzet Harian dan Rata-rata Bergerak 7 Hari"
-            )
-            tombol_fokus("fokus_mendalam", "fig5b")
+            judul_dan_tombol("Omzet Harian dan Rata-rata Bergerak 7 Hari", "fokus_mendalam", "fig5b")
 
             ma = harian.copy()
             ma["Juta"] = ma["Omzet_Bersih_Rp"] / 1e6
@@ -1197,8 +1221,7 @@ with tab2:
 
     if mode_grafik == "Semua grafik (2×2)" or pilihan_mendalam == "fig6":
         with kanan_bawah:
-            st.subheader("Rating Pelanggan per Outlet")
-            tombol_fokus("fokus_mendalam", "fig6")
+            judul_dan_tombol("Rating Pelanggan per Outlet", "fokus_mendalam", "fig6")
 
             if not valid.empty:
                 rating = valid.copy()

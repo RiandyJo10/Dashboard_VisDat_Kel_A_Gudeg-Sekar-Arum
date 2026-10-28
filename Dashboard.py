@@ -33,6 +33,14 @@ BULAN = [
 ]
 
 st.markdown("""
+/* TES CSS FILTER */
+div[data-testid="stSelectbox"] {
+    outline: 3px solid blue !important;
+}
+
+div[data-testid="stDateInput"] {
+    outline: 3px solid blue !important;
+}
 <style>
 .stApp {
     background-color: #FCF7EF;

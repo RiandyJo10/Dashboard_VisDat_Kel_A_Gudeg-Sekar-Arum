@@ -576,29 +576,37 @@ bulanan = bulanan[
 ].copy()
 
 
-mode_grafik = st.radio(
-    "Mode tampilan grafik",
-    ["Semua grafik (2×2)", "Fokus satu grafik"],
-    horizontal=True,
-    key="mode_grafik",
-    help="Pilih susunan empat grafik atau perbesar satu grafik untuk melihat detail."
-)
+# Setiap kartu grafik memiliki tombol perbesar sendiri.
+# Fokus disimpan terpisah untuk dua tab agar pilihan tidak saling mengganggu.
+if "fokus_bisnis" not in st.session_state:
+    st.session_state.fokus_bisnis = None
+if "fokus_mendalam" not in st.session_state:
+    st.session_state.fokus_mendalam = None
+
+def ubah_fokus(nama_tab, kode_grafik):
+    st.session_state[nama_tab] = kode_grafik
+
+def tombol_fokus(nama_tab, kode_grafik):
+    aktif = st.session_state[nama_tab] == kode_grafik
+    st.button(
+        "↩ Kembali ke 4 grafik" if aktif else "⛶ Perbesar",
+        key=f"aksi_{kode_grafik}",
+        on_click=ubah_fokus,
+        args=(nama_tab, None if aktif else kode_grafik),
+        help="Perbesar grafik ini" if not aktif else "Tampilkan lagi susunan 2×2",
+    )
 
 tab1, tab2 = st.tabs(["📊 Ringkasan Bisnis", "🔍 Analisis Mendalam"])
 
 with tab1:
-    pilihan_bisnis = None
-    if mode_grafik == "Fokus satu grafik":
-        pilihan_bisnis = st.selectbox(
-            "Pilih grafik yang ingin diperbesar",
-            ["Omzet Bersih per Outlet", "Omzet per Kanal", "Proporsi Produk", "Tren Omzet Bulanan"],
-            key="grafik_fokus_bisnis"
-        )
+    pilihan_bisnis = st.session_state.fokus_bisnis
+    mode_grafik = "Semua grafik (2×2)" if pilihan_bisnis is None else "Fokus satu grafik"
     kiri_atas, kanan_atas = (st.columns(2, gap="medium")
                               if mode_grafik == "Semua grafik (2×2)"
                               else (st.container(), st.container()))
-    if mode_grafik == "Semua grafik (2×2)" or pilihan_bisnis == "Omzet Bersih per Outlet":
+    if mode_grafik == "Semua grafik (2×2)" or pilihan_bisnis == "fig1a":
         with kiri_atas:
+            tombol_fokus("fokus_bisnis", "fig1a")
             st.subheader("Perbandingan Omzet Bersih Outlet")
 
             outlet_utama = outlet.idxmax()
@@ -664,8 +672,9 @@ with tab1:
 
 
 
-    if mode_grafik == "Semua grafik (2×2)" or pilihan_bisnis == "Omzet per Kanal":
+    if mode_grafik == "Semua grafik (2×2)" or pilihan_bisnis == "fig1b":
         with kanan_atas:
+            tombol_fokus("fokus_bisnis", "fig1b")
             st.subheader("Perbandingan Omzet Kanal Penjualan")
 
             kanal_utama = kanal.idxmax()
@@ -737,8 +746,9 @@ with tab1:
     kiri_bawah, kanan_bawah = (st.columns(2, gap="medium")
                                 if mode_grafik == "Semua grafik (2×2)"
                                 else (st.container(), st.container()))
-    if mode_grafik == "Semua grafik (2×2)" or pilihan_bisnis == "Proporsi Produk":
+    if mode_grafik == "Semua grafik (2×2)" or pilihan_bisnis == "fig3":
         with kiri_bawah:
+            tombol_fokus("fokus_bisnis", "fig3")
             st.subheader("Proporsi Omzet Produk Sebelum Diskon")
 
             omzet_gudeg = data["Omzet_Gudeg_Rp"].sum()
@@ -822,8 +832,9 @@ with tab1:
 
 
 
-    if mode_grafik == "Semua grafik (2×2)" or pilihan_bisnis == "Tren Omzet Bulanan":
+    if mode_grafik == "Semua grafik (2×2)" or pilihan_bisnis == "fig5a":
         with kanan_bawah:
+            tombol_fokus("fokus_bisnis", "fig5a")
             st.subheader("Tren Omzet Bersih Bulanan")
 
             bulan_tertinggi = bulanan.loc[
@@ -901,18 +912,14 @@ with tab1:
 
 
 with tab2:
-    pilihan_mendalam = None
-    if mode_grafik == "Fokus satu grafik":
-        pilihan_mendalam = st.selectbox(
-            "Pilih grafik yang ingin diperbesar",
-            ["Distribusi Omzet Harian", "Transaksi vs Omzet", "Moving Average 7 Hari", "Rating Pelanggan"],
-            key="grafik_fokus_mendalam"
-        )
+    pilihan_mendalam = st.session_state.fokus_mendalam
+    mode_grafik = "Semua grafik (2×2)" if pilihan_mendalam is None else "Fokus satu grafik"
     kiri_atas, kanan_atas = (st.columns(2, gap="medium")
                               if mode_grafik == "Semua grafik (2×2)"
                               else (st.container(), st.container()))
-    if mode_grafik == "Semua grafik (2×2)" or pilihan_mendalam == "Distribusi Omzet Harian":
+    if mode_grafik == "Semua grafik (2×2)" or pilihan_mendalam == "fig2":
         with kiri_atas:
+            tombol_fokus("fokus_mendalam", "fig2")
             st.subheader("Distribusi Omzet Harian per Outlet")
 
             boxdata = harian_outlet.copy()
@@ -961,8 +968,9 @@ with tab2:
 
 
 
-    if mode_grafik == "Semua grafik (2×2)" or pilihan_mendalam == "Transaksi vs Omzet":
+    if mode_grafik == "Semua grafik (2×2)" or pilihan_mendalam == "fig4":
         with kanan_atas:
+            tombol_fokus("fokus_mendalam", "fig4")
             st.subheader("Transaksi vs Omzet Bersih Harian")
 
             scatter = harian_outlet.copy()
@@ -1044,8 +1052,9 @@ with tab2:
     kiri_bawah, kanan_bawah = (st.columns(2, gap="medium")
                                 if mode_grafik == "Semua grafik (2×2)"
                                 else (st.container(), st.container()))
-    if mode_grafik == "Semua grafik (2×2)" or pilihan_mendalam == "Moving Average 7 Hari":
+    if mode_grafik == "Semua grafik (2×2)" or pilihan_mendalam == "fig5b":
         with kiri_bawah:
+            tombol_fokus("fokus_mendalam", "fig5b")
             st.subheader(
                 "Omzet Harian dan Rata-rata Bergerak 7 Hari"
             )
@@ -1148,8 +1157,9 @@ with tab2:
 
 
 
-    if mode_grafik == "Semua grafik (2×2)" or pilihan_mendalam == "Rating Pelanggan":
+    if mode_grafik == "Semua grafik (2×2)" or pilihan_mendalam == "fig6":
         with kanan_bawah:
+            tombol_fokus("fokus_mendalam", "fig6")
             st.subheader("Rating Pelanggan per Outlet")
 
             if not valid.empty:
@@ -1239,7 +1249,7 @@ with st.expander("Petunjuk Penggunaan Dashboard"):
     st.markdown("""
     1. Pilih outlet, kanal penjualan, dan rentang tanggal.
     2. Perhatikan perubahan empat KPI.
-    3. Pilih mode 2×2 untuk melihat empat grafik, atau mode fokus untuk memperbesar satu grafik.
+    3. Klik Perbesar di tiap grafik untuk fokus, lalu Kembali ke 4 grafik untuk kembali.
     4. Baca kalimat temuan utama di atas setiap grafik.
     5. Arahkan kursor ke grafik untuk melihat rincian.
     """)

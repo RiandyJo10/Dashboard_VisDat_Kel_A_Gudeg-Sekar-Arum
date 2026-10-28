@@ -606,8 +606,8 @@ with tab1:
                               else (st.container(), st.container()))
     if mode_grafik == "Semua grafik (2×2)" or pilihan_bisnis == "fig1a":
         with kiri_atas:
-            tombol_fokus("fokus_bisnis", "fig1a")
             st.subheader("Perbandingan Omzet Bersih Outlet")
+            tombol_fokus("fokus_bisnis", "fig1a")
 
             outlet_utama = outlet.idxmax()
             kontribusi_outlet = (
@@ -674,8 +674,8 @@ with tab1:
 
     if mode_grafik == "Semua grafik (2×2)" or pilihan_bisnis == "fig1b":
         with kanan_atas:
-            tombol_fokus("fokus_bisnis", "fig1b")
             st.subheader("Perbandingan Omzet Kanal Penjualan")
+            tombol_fokus("fokus_bisnis", "fig1b")
 
             kanal_utama = kanal.idxmax()
             kontribusi_kanal = (
@@ -748,8 +748,8 @@ with tab1:
                                 else (st.container(), st.container()))
     if mode_grafik == "Semua grafik (2×2)" or pilihan_bisnis == "fig3":
         with kiri_bawah:
-            tombol_fokus("fokus_bisnis", "fig3")
             st.subheader("Proporsi Omzet Produk Sebelum Diskon")
+            tombol_fokus("fokus_bisnis", "fig3")
 
             omzet_gudeg = data["Omzet_Gudeg_Rp"].sum()
             omzet_oleh = data["Omzet_Oleh_Oleh_Rp"].sum()
@@ -834,8 +834,8 @@ with tab1:
 
     if mode_grafik == "Semua grafik (2×2)" or pilihan_bisnis == "fig5a":
         with kanan_bawah:
-            tombol_fokus("fokus_bisnis", "fig5a")
             st.subheader("Tren Omzet Bersih Bulanan")
+            tombol_fokus("fokus_bisnis", "fig5a")
 
             bulan_tertinggi = bulanan.loc[
                 bulanan["Omzet_Bersih_Rp"].idxmax()
@@ -919,8 +919,8 @@ with tab2:
                               else (st.container(), st.container()))
     if mode_grafik == "Semua grafik (2×2)" or pilihan_mendalam == "fig2":
         with kiri_atas:
-            tombol_fokus("fokus_mendalam", "fig2")
             st.subheader("Distribusi Omzet Harian per Outlet")
+            tombol_fokus("fokus_mendalam", "fig2")
 
             boxdata = harian_outlet.copy()
             boxdata["Juta"] = (
@@ -970,8 +970,8 @@ with tab2:
 
     if mode_grafik == "Semua grafik (2×2)" or pilihan_mendalam == "fig4":
         with kanan_atas:
-            tombol_fokus("fokus_mendalam", "fig4")
             st.subheader("Transaksi vs Omzet Bersih Harian")
+            tombol_fokus("fokus_mendalam", "fig4")
 
             scatter = harian_outlet.copy()
             scatter["Juta"] = (
@@ -1054,10 +1054,10 @@ with tab2:
                                 else (st.container(), st.container()))
     if mode_grafik == "Semua grafik (2×2)" or pilihan_mendalam == "fig5b":
         with kiri_bawah:
-            tombol_fokus("fokus_mendalam", "fig5b")
             st.subheader(
                 "Omzet Harian dan Rata-rata Bergerak 7 Hari"
             )
+            tombol_fokus("fokus_mendalam", "fig5b")
 
             ma = harian.copy()
             ma["Juta"] = ma["Omzet_Bersih_Rp"] / 1e6
@@ -1159,8 +1159,8 @@ with tab2:
 
     if mode_grafik == "Semua grafik (2×2)" or pilihan_mendalam == "fig6":
         with kanan_bawah:
-            tombol_fokus("fokus_mendalam", "fig6")
             st.subheader("Rating Pelanggan per Outlet")
+            tombol_fokus("fokus_mendalam", "fig6")
 
             if not valid.empty:
                 rating = valid.copy()

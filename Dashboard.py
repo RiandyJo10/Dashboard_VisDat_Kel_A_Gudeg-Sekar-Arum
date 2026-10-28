@@ -101,46 +101,37 @@ div[data-testid="stPlotlyChart"] {
     border-radius: 14px;
     padding: 8px;
 }
-/* FILTER OUTLET & KANAL: satu latar gradasi termasuk area panah. */
-/* Arahkan gradasi ke pembungkus dropdown, bukan hanya nilai pilihannya. */
+/* FILTER: gradasi pada seluruh bidang, termasuk area panah. */
+/* Target dibatasi pada dua selectbox dengan key spesifik. */
 .st-key-filter_outlet [data-baseweb="select"],
-.st-key-filter_kanal [data-baseweb="select"] {
-    background: linear-gradient(110deg, #5B392B, #A9673F) !important;
-    border: 1px solid #A9673F !important;
-    border-radius: 10px !important;
-    min-height: 42px !important;
-    overflow: hidden !important;
-}
-/* Semua lapisan internal transparan agar warna kotak utama tidak tertutup. */
-.st-key-filter_outlet [data-baseweb="select"] div,
-.st-key-filter_kanal [data-baseweb="select"] div,
+.st-key-filter_kanal [data-baseweb="select"],
 .st-key-filter_outlet [data-baseweb="select"] [role="combobox"],
 .st-key-filter_kanal [data-baseweb="select"] [role="combobox"] {
-    background: transparent !important;
-    background-image: none !important;
-    border-color: transparent !important;
+    background: linear-gradient(110deg, #5B392B, #A9673F) !important;
+    background-color: #5B392B !important;
+    border-color: #A9673F !important;
+    border-radius: 10px !important;
+    min-height: 42px;
 }
-/* Tombol panah adalah BUTTON tersendiri (terlihat dari Inspect). */
-/* Beri gradasi cokelat secara eksplisit supaya ujung kanan tak pernah putih. */
+/* Bagian dalam tidak boleh menjadi lapisan abu-abu di atas gradasi. */
+.st-key-filter_outlet [data-baseweb="select"] div:not([role="combobox"]),
+.st-key-filter_kanal [data-baseweb="select"] div:not([role="combobox"]),
 .st-key-filter_outlet [data-baseweb="select"] button,
 .st-key-filter_kanal [data-baseweb="select"] button,
+.st-key-filter_outlet [data-baseweb="select"] input,
+.st-key-filter_kanal [data-baseweb="select"] input {
+    background: transparent !important;
+    background-image: none !important;
+    background-color: transparent !important;
+}
+/* Tombol panah harus menyatu dengan bidang dropdown. */
 .st-key-filter_outlet button[aria-label="Open"],
 .st-key-filter_kanal button[aria-label="Open"] {
-    background: linear-gradient(110deg, #956044, #A9673F) !important;
-    background-color: #A9673F !important;
+    background: transparent !important;
     border: 0 !important;
     box-shadow: none !important;
-    border-radius: 0 !important;
-    color: #FFFFFF !important;
-    -webkit-text-fill-color: #FFFFFF !important;
 }
-.st-key-filter_outlet [data-baseweb="select"] button::before,
-.st-key-filter_outlet [data-baseweb="select"] button::after,
-.st-key-filter_kanal [data-baseweb="select"] button::before,
-.st-key-filter_kanal [data-baseweb="select"] button::after {
-    background: transparent !important;
-}
-/* Nilai terpilih dan tanda V tetap putih; hanya lingkup kedua selectbox. */
+/* Teks pilihan putih, tanpa memengaruhi popup daftar opsi. */
 .st-key-filter_outlet [data-baseweb="select"] span,
 .st-key-filter_kanal [data-baseweb="select"] span,
 .st-key-filter_outlet [data-baseweb="select"] input,
@@ -153,7 +144,14 @@ div[data-testid="stPlotlyChart"] {
     color: #FFFFFF !important;
     stroke: #FFFFFF !important;
 }
-/* TANGGAL: pertahankan aturan terpisah yang sebelumnya sudah sesuai. */
+/* Input pencarian tidak bisa diklik untuk mengetik; pengguna memilih lewat menu. */
+.st-key-filter_outlet [data-baseweb="select"] input,
+.st-key-filter_kanal [data-baseweb="select"] input {
+    pointer-events: none !important;
+    caret-color: transparent !important;
+    user-select: none !important;
+}
+/* Rentang tanggal: pertahankan penampilan yang sudah berhasil. */
 .st-key-filter_tanggal [data-baseweb="input"],
 .st-key-filter_tanggal [data-baseweb="base-input"],
 .st-key-filter_tanggal [data-baseweb="input"] > div,
@@ -175,12 +173,12 @@ div[data-testid="stPlotlyChart"] {
 }
 .st-key-filter_tanggal input,
 .st-key-filter_tanggal [data-testid="stDateInputField"] * {
-    color: #FFFFFF !important;
-    -webkit-text-fill-color: #FFFFFF !important;
+    color: white !important;
+    -webkit-text-fill-color: white !important;
 }
 .st-key-filter_tanggal svg {
-    color: #FFFFFF !important;
-    stroke: #FFFFFF !important;
+    color: white !important;
+    stroke: white !important;
 }
 /* Petunjuk penggunaan: jaga kontras saat dibuka */
 div[data-testid="stExpander"] details,

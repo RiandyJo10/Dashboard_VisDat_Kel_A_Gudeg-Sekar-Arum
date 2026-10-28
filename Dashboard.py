@@ -101,46 +101,13 @@ div[data-testid="stPlotlyChart"] {
     border-radius: 14px;
     padding: 8px;
 }
-/* FILTER DROPDOWN: lapisan panah kanan memakai cokelat yang sama. */
-/* Scoped khusus untuk Outlet dan Kanal, tidak mengubah filter tanggal. */
+/* Filter cokelat - hanya tiga widget, tidak menyentuh expander */
 .st-key-filter_outlet [data-baseweb="select"],
 .st-key-filter_kanal [data-baseweb="select"],
-.st-key-filter_outlet [data-baseweb="select"] div,
-.st-key-filter_kanal [data-baseweb="select"] div,
-.st-key-filter_outlet [data-baseweb="select"] button,
-.st-key-filter_kanal [data-baseweb="select"] button,
-.st-key-filter_outlet [role="combobox"],
-.st-key-filter_kanal [role="combobox"] {
-    background: #784F39 !important;
-    background-image: none !important;
-    color: #FFFFFF !important;
-}
-/* Hanya bungkus interaktif terluar yang memiliki bingkai. */
 .st-key-filter_outlet [data-baseweb="select"] > div,
-.st-key-filter_kanal [data-baseweb="select"] > div {
-    border: 1px solid #784F39 !important;
-    border-radius: 10px !important;
-    min-height: 42px;
-    overflow: hidden;
-}
-/* Hindari garis pemisah / lapisan terang di sisi panah. */
-.st-key-filter_outlet [data-baseweb="select"] div,
-.st-key-filter_kanal [data-baseweb="select"] div {
-    border-color: transparent !important;
-}
-.st-key-filter_outlet [data-baseweb="select"] span,
-.st-key-filter_kanal [data-baseweb="select"] span,
-.st-key-filter_outlet [data-baseweb="select"] input,
-.st-key-filter_kanal [data-baseweb="select"] input {
-    color: #FFFFFF !important;
-    -webkit-text-fill-color: #FFFFFF !important;
-}
-.st-key-filter_outlet [data-baseweb="select"] svg,
-.st-key-filter_kanal [data-baseweb="select"] svg {
-    color: #FFFFFF !important;
-    stroke: #FFFFFF !important;
-}
-/* Filter tanggal: pertahankan warna dan tampilan yang sudah benar. */
+.st-key-filter_kanal [data-baseweb="select"] > div,
+.st-key-filter_outlet [role="combobox"],
+.st-key-filter_kanal [role="combobox"],
 .st-key-filter_tanggal [data-baseweb="input"],
 .st-key-filter_tanggal [data-baseweb="base-input"],
 .st-key-filter_tanggal [data-baseweb="input"] > div,
@@ -149,23 +116,33 @@ div[data-testid="stPlotlyChart"] {
 .st-key-filter_tanggal input {
     background-color: #5B392B !important;
     background-image: linear-gradient(110deg, #5B392B, #A9673F) !important;
-    color: #FFFFFF !important;
+    color: #5B392B !important;
     border-color: #A9673F !important;
 }
+/* Lapisan di dalam kontrol tidak boleh menutup gradasi */
+.st-key-filter_outlet [data-baseweb="select"] > div > div,
+.st-key-filter_kanal [data-baseweb="select"] > div > div,
 .st-key-filter_tanggal [data-baseweb="input"] > div > div,
 .st-key-filter_tanggal [data-baseweb="base-input"] > div > div {
     background-color: transparent !important;
 }
+.st-key-filter_outlet [role="combobox"],
+.st-key-filter_kanal [role="combobox"],
 .st-key-filter_tanggal [data-baseweb="input"],
 .st-key-filter_tanggal [data-baseweb="base-input"] {
     border-radius: 10px !important;
     min-height: 42px;
 }
+/* Batasi warna teks dan ikon hanya di tiga filter */
+.st-key-filter_outlet [data-baseweb="select"] *,
+.st-key-filter_kanal [data-baseweb="select"] *,
 .st-key-filter_tanggal input,
 .st-key-filter_tanggal [data-testid="stDateInputField"] * {
     color: white !important;
     -webkit-text-fill-color: white !important;
 }
+.st-key-filter_outlet svg,
+.st-key-filter_kanal svg,
 .st-key-filter_tanggal svg {
     color: white !important;
     stroke: white !important;

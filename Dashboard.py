@@ -33,14 +33,6 @@ BULAN = [
 ]
 
 st.markdown("""
-/* TES CSS FILTER */
-div[data-testid="stSelectbox"] {
-    outline: 3px solid blue !important;
-}
-
-div[data-testid="stDateInput"] {
-    outline: 3px solid blue !important;
-}
 <style>
 .stApp {
     background-color: #FCF7EF;
@@ -155,6 +147,12 @@ div[data-testid="stPlotlyChart"] {
 [data-testid="stDateInput"] [data-baseweb="input"]:focus-within {
     border-color: #E6C39D !important;
     box-shadow: 0 0 0 2px rgba(169, 103, 63, 0.2) !important;
+}
+
+/* TES WARNA FILTER */
+div[data-testid="stSelectbox"],
+div[data-testid="stDateInput"] {
+    outline: 4px solid blue !important;
 }
 </style>
 """, unsafe_allow_html=True)

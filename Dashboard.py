@@ -116,23 +116,11 @@ div[data-testid="stPlotlyChart"] {
 .st-key-filter_tanggal input {
     background-color: #5B392B !important;
     background-image: linear-gradient(110deg, #5B392B, #A9673F) !important;
-    color: #5B392B !important;
+    color: #FFFFFF !important;
     border-color: #A9673F !important;
 }
-/* Lapisan di dalam kontrol tidak boleh menutup gradasi */
-.st-key-filter_outlet [data-baseweb="select"] > div > div,
-.st-key-filter_kanal [data-baseweb="select"] > div > div,
-.st-key-filter_tanggal [data-baseweb="input"] > div > div,
-.st-key-filter_tanggal [data-baseweb="base-input"] > div > div {
-    background-color: transparent !important;
-}
-.st-key-filter_outlet [role="combobox"],
-.st-key-filter_kanal [role="combobox"],
-.st-key-filter_tanggal [data-baseweb="input"],
-.st-key-filter_tanggal [data-baseweb="base-input"] {
-    border-radius: 10px !important;
-    min-height: 42px;
-}
+/* DISINIII YANG DIHAPUS
+
 /* Batasi warna teks dan ikon hanya di tiga filter */
 .st-key-filter_outlet [data-baseweb="select"] *,
 .st-key-filter_kanal [data-baseweb="select"] *,

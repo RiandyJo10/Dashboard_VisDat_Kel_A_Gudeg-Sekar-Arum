@@ -106,7 +106,8 @@ div[data-testid="stPlotlyChart"] {
 .st-key-filter_kanal [data-baseweb="select"],
 .st-key-filter_outlet [data-baseweb="select"] > div,
 .st-key-filter_kanal [data-baseweb="select"] > div,
-/*disinii
+.st-key-filter_outlet [role="combobox"],
+.st-key-filter_kanal [role="combobox"],
 .st-key-filter_tanggal [data-baseweb="input"],
 .st-key-filter_tanggal [data-baseweb="base-input"],
 .st-key-filter_tanggal [data-baseweb="input"] > div,
